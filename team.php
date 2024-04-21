@@ -1,43 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    include "connect.php";
+    include_once "connect.php";
     include 'Queries.php';
     include 'codeBlocks.php';
-   $query_run =mysqli_query($conn,$SelectingAllEmployeeFullName);
-   $check_employee = mysqli_num_rows($query_run)>0;
-
-   $employee ="";
-   $ImageNumber =1;
-
-   while($emp = $query_run->fetch_assoc()){
-        if($ImageNumber == 5){
-            $ImageNumber =1;
+    $query_run =mysqli_query($conn,$SelectingAllEmployeeFullName);
+    $employees = "";
+    $imageNum = 1;$animationNum = 1;
+    while($emp =$query_run->fetch_assoc()) {
+        if ($imageNum == 5){
+            $imageNum = 1;
         }
-       $employee.= '<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-       <div class="rounded shadow overflow-hidden">
-           <div class="position-relative">
-               <img class="img-fluid" src="img/team-'.$ImageNumber.'.jpg" alt="">
-               <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
-               <i class="fas fa-pencil-alt"></i>  </a>
-               <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                   <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                   <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                   <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-               </div>
-           </div>
-           <div class="text-center p-4 mt-3">
-               <h5 class="fw-bold mb-0">'.$emp['FName'].'</h5>
-               <small>'.$emp['RoleName'].'</small>
-           </div>
-       </div>
-   </div>';
-    $ImageNumber++;
-   }
-
-
+        $employees .= '<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
+            <div class="rounded shadow overflow-hidden">
+                <div class="position-relative">
+                    <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">
+                    <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="text-center p-4 mt-3">
+                    <h5 class="fw-bold mb-0">' . $emp['FName'] . '</h5>
+                    </h5>
+                    <small>' . $emp['RoleName'] . '</small>
+                </div>
+            </div>
+        </div>';
+        $imageNum++;
+        $animationNum++;
+    }
 ?>
-
 <head>
     <?=$headerBlock?>
 </head>
@@ -116,12 +113,11 @@
                     <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
                 </div>
-                <div class="row g-4">
-           <?= $employee?> 
-                 </div>
+                <div class="row g-4 justify-content-center">
+                    <?=$employees?>
+                </div>
             </div>
-        </div>       
-
+        </div>
         <!-- Team End -->
 
 
@@ -149,7 +145,6 @@
 
     <!-- JavaScript Libraries -->
     <?=$scriptBlock?>
-
 </body>
 <script>
     $("#navbarCollapse a").each(function () {
@@ -161,4 +156,3 @@
     });
 </script>
 </html>
-

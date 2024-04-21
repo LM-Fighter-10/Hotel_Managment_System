@@ -17,18 +17,18 @@
                 </a>
             </div>
             <div class="col-lg-9">
-                <div class="row gx-0 bg-white d-none d-lg-flex">
-                    <div class="col-lg-7 px-5 text-start">
+                <div class="row gx-0 bg-white d-none d-lg-flex header-contact-container">
+                    <div class="col-lg-7 px-5 text-start header-contact-email-phone">
                         <div class="h-100 d-inline-flex align-items-center py-2 me-4">
                             <i class="fa fa-envelope text-primary me-2"></i>
-                            <p class="mb-0">info@example.com</p>
+                            <p class="mb-0">hotelier997@gmail.com</p>
                         </div>
                         <div class="h-100 d-inline-flex align-items-center py-2">
                             <i class="fa fa-phone-alt text-primary me-2"></i>
                             <p class="mb-0">+012 345 6789</p>
                         </div>
                     </div>
-                    <div class="col-lg-5 px-5 text-end">
+                    <div class="col-lg-5 px-5 text-end header-contact-icons">
                         <div class="d-inline-flex align-items-center py-2">
                             <a class="me-3" href=""><i class="fab fa-facebook-f"></i></a>
                             <a class="me-3" href=""><i class="fab fa-twitter"></i></a>
@@ -54,14 +54,22 @@
                             <a href="booking.php" class="nav-item nav-link">Booking</a>
                             <a href="team.php" class="nav-item nav-link">Our Team</a>
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
+                        </div>';
+    if (!isset($_SESSION['username'])) {
+        $navBarBlock.= '<button onclick="window.open(\'login.php\', \'_self\')" class="login_RegBtn">Login/Register</button>
                         </div>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
             </div>
-        </div>
-    </div>
-    <!-- Header End -->
-    ';
+        </div>';
+    } else{
+        $navBarBlock.= '<button onclick="window.open(\'logout.php\', \'_self\')" class="logout_HomeBtn">Logout</button>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>';
+    }
     $headerBlock = '
         <meta charset="utf-8">
     <title>Hotel Management System</title>
@@ -93,22 +101,14 @@
     <link href="css/style.css" rel="stylesheet">';
     $footerBlock = '
     <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
+        <div class="container-fluid bg-dark text-light footer wow" data-wow-delay="0.1s">
             <div class="container pb-5">
                 <div class="row g-5">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="bg-primary rounded p-4">
-                            <a href="index.php"><h1 class="text-white text-uppercase mb-3">Hotelier</h1></a>
-                            <p class="text-white mb-0">
-								Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">Hotelier – Premium Version</a>, build a professional website for your hotel business and grab the attention of new visitors upon your site’s launch.
-							</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
+                    <div class="col-md-6 col-lg-7">
                         <h6 class="section-title text-start text-primary text-uppercase mb-4">Contact</h6>
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>hotelier997@gmail.com</p>
                         <div class="d-flex pt-2">
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
@@ -142,12 +142,12 @@
                 <div class="copyright">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a class="border-bottom" href="#">Hotel Management System</a>, All Right Reserved. 		
+                            &copy; <a class="border-bottom" href="index.php">Hotelier</a>, All Right Reserved. 		
 							Designed By 
                         </div>
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
-                                <a href="">Home</a>
+                                <a href="index.php">Home</a>
                                 <a href="">Cookies</a>
                                 <a href="">Help</a>
                                 <a href="">FQAs</a>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    include "connect.php";
+    include_once "connect.php";
     include 'Queries.php';
     include 'codeBlocks.php';
 ?>
