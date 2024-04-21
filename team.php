@@ -7,6 +7,35 @@
    $query_run =mysqli_query($conn,$SelectingAllEmployeeFullName);
    $check_employee = mysqli_num_rows($query_run)>0;
 
+   $employee ="";
+   $ImageNumber =1;
+
+   while($emp = $query_run->fetch_assoc()){
+        if($ImageNumber == 5){
+            $ImageNumber =1;
+        }
+       $employee.= '<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+       <div class="rounded shadow overflow-hidden">
+           <div class="position-relative">
+               <img class="img-fluid" src="img/team-'.$ImageNumber.'.jpg" alt="">
+               <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
+               <i class="fas fa-pencil-alt"></i>  </a>
+               <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                   <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                   <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                   <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+               </div>
+           </div>
+           <div class="text-center p-4 mt-3">
+               <h5 class="fw-bold mb-0">'.$emp['FName'].'</h5>
+               <small>'.$emp['RoleName'].'</small>
+           </div>
+       </div>
+   </div>';
+    $ImageNumber++;
+   }
+
+
 ?>
 
 <head>
@@ -88,125 +117,11 @@
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
                 </div>
                 <div class="row g-4">
-<?php
-if($check_employee){
-    $row = mysqli_fetch_array($query_run);
-    $fullName = $row['FName'] . " " . $row['LName'];
-        ?>
-        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="rounded shadow overflow-hidden">
-                        <!-- <i class='fas fa-edit' style='font-size:24px'></i> -->
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="">
-                                <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
-                                <i class="fas fa-pencil-alt"></i>  </a>
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">
-                               
-                                <?php  echo $fullName;?></h5>    
-                                </h5>
-                                <small><?php echo $row['RoleName']?></small>
-                            </div>
-                        </div>
-                    </div>
-        <?php }?>
-                
-                   
-<?php
-if($check_employee){
-    $row = mysqli_fetch_array($query_run);
-    $fullName = $row['FName'] . " " . $row['LName'];
-        ?>
-
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-2.jpg" alt="">
-                                <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
-                                <i class="fas fa-pencil-alt"></i>  </a>
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">
-                                <?php echo $fullName;?>
-                                </h5>
-                                <small><?php echo $row['RoleName']?></small>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-}
-
-?>                    
- <?php
-if($check_employee){
-    $row = mysqli_fetch_array($query_run);
-    $fullName = $row['FName'] . " " . $row['LName'];
-        ?>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-3.jpg" alt="">
-                                <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
-                                <i class="fas fa-pencil-alt"></i>  </a>
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0"> <?php
-                                 echo $fullName;?></h5>
-                                <small><?php echo $row['RoleName']?></small>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-}
-
-?>          
- <?php
-if($check_employee){
-    $row = mysqli_fetch_array($query_run);
-    $fullName = $row['FName'] . " " . $row['LName'];
-        ?>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-4.jpg" alt="">
-                                <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
-                                <i class="fas fa-pencil-alt"></i>  </a>
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0"> <?php echo $fullName;?></h5>
-                                <small><?php echo $row['RoleName']?></small>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-}
-
-?>          
-
-                </div>
+           <?= $employee?> 
+                 </div>
             </div>
-        </div>
+        </div>       
+
         <!-- Team End -->
 
 
