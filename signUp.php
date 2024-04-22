@@ -11,10 +11,8 @@
         header("Location: index.php");
         exit();
     }
-    $e = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $email = $_POST['email'];
-        $e = $email;
         $userId = $_POST['userId'];
         echo $email;
         $getCustomersForLogIn = "SELECT * FROM `customer` WHERE Email = '$email' AND CustomerID = '$userId'";
@@ -66,17 +64,82 @@
     <div class="bg-white p-0">
         <?=$navBarBlock?>
         <div class="login-body">
-            <div class="Login-container">
-                <div class="heading">Sign In</div>
+            <div class="signUp-container">
+                <div class="heading signUp-heading">Register</div>
                 <?=$erroDiv?>
-                <form id="LoginForm22" class="Login-form" method="POST">
-                    <input required="" class="input" type="text" name="userId" id="userId" placeholder="User ID">
-                    <input required="" class="input" type="email" name="email" id="email" placeholder="E-mail">
-                    <input class="login-button" type="submit" value="Sign In">
+                <form class="signUp-form" autocomplete="off">
+                    <div class="signUp-flex">
+                        <label>
+                            <input aria-autocomplete="none" autocomplete="one-time-code" required=""
+                                   placeholder="" type="text" class="input">
+                            <span>Firstname</span>
+                        </label>
+
+                        <label>
+                            <input aria-autocomplete="none" autocomplete="one-time-code" required=""
+                                   placeholder="" type="text" class="input">
+                            <span>Lastname</span>
+                        </label>
+                    </div>
+
+                    <label>
+                        <input aria-autocomplete="none" autocomplete="one-time-code"
+                               required="" placeholder="" type="email" class="input error">
+                        <span class="">Email</span>
+                    </label>
+
+                    <div class="signUp-flex">
+                        <label style="width: 36%">
+                            <div class="paste-button">
+                                <button type="button" class="button"><span id="selectedG">Gender</span><span>▼</span></button>
+                              <div class="dropdown-content">
+                                <button type="button" id="top">Male</button>
+                                <button type="button" id="middle">Female</button>
+                              </div>
+                            </div>
+                        </label>
+
+                        <label>
+                            <input aria-autocomplete="none" autocomplete="one-time-code" required=""
+                                   placeholder="" type="text" class="input">
+                            <span>Phone Number</span>
+                        </label>
+                    </div>
+
+                    <label>
+                        <input aria-autocomplete="none" autocomplete="nothing"
+                               required="" placeholder="" type="text" class="input">
+                        <span>Contact Number</span>
+                    </label>
+                    <div class="signUp-flex">
+                        <label>
+                            <input aria-autocomplete="none" autocomplete="one-time-code" required=""
+                                   placeholder="" type="text" class="input">
+                            <span>Country</span>
+                        </label>
+
+                        <label>
+                            <input aria-autocomplete="none" autocomplete="one-time-code" required=""
+                                   placeholder="" type="text" class="input">
+                            <span>City</span>
+                        </label>
+                    </div>
+                    <div class="signUp-flex">
+                        <label>
+                            <input aria-autocomplete="none" autocomplete="one-time-code" required=""
+                                   placeholder="" type="text" class="input">
+                            <span>State</span>
+                        </label>
+
+                        <label>
+                            <input aria-autocomplete="none" autocomplete="one-time-code" required=""
+                                   placeholder="" type="text" class="input">
+                            <span>Zip Code</span>
+                        </label>
+                    </div>
+                    <button class="signUp-submit">Submit</button>
+                    <p class="alreadHaveAccount">Already have an acount ? <a href="login.php">Sign In</a> </p>
                 </form>
-                <div class="social-account-container">
-                    <a href="signUp.php" class="social-account-container-a">Don't Have An Accout?</a>
-                </div>
             </div>
         </div>
         <?=$footerBlock?>
@@ -86,21 +149,59 @@
     <!-- Scripts -->
     <?=$scriptBlock?>
     <script>
-        var LoginError = "";
-        var ErrorDiv = document.getElementById('#LoginErrorMsg');
-        document.getElementsByClassName("login-button").onclick = function(){
-            ErrorDiv.innerHTML = "";
-            var form = document.getElementById('LoginForm22');
-            var formData = new FormData(form);
-            formData.append('email', document.getElementById('#email').value());
-            formData.append('userId', document.getElementById('#userId').value());
-            fetch('login.php', {
-                method: 'POST',
-                body: form
-            })
+        const inputLabels = $(".signUp-form label .input + span");
+        const inputFields = $(".signUp-form label .input");
+        document.getElementsByClassName("signUp-submit").onclick = function(){
+            let error = false;
+            inputFields.each(function(){
+                if ($(this).val() === ""){
+                    error = true;
+                    $(this).addClass("error");
+                    $(this).next().addClass("error");
+                }else{
+                    $(this).removeClass("error");
+                    $(this).next().removeClass("error");
+                }
+            });
+            if (!error){
+                let data = {
+                    firstname: inputFields[0].val(),
+                    lastname: inputFields[1].val(),
+                    email: inputFields[2].val(),
+                    password: inputFields[3].val(),
+                    confirmPassword: inputFields[4].val()
+                }
+                var form = document.getElementById('LoginForm22');
+                var formData = new FormData(form);
+                formData.append('fName', data.firstname);
+                formData.append('lName', data.lastname);
+                formData.append('email', data.email);
+                formData.append('password', data.password);
+                fetch('login.php', {
+                    method: 'POST',
+                    body: form
+                })
+            }
         };
         $("#navbarCollapse a").each(function () {
             $(this).removeClass("active");
+        });
+        $(document).on('mousedown', function (ev) {
+            if (!$(ev.target).closest('.button, #top, #middle').length) {
+                $(".dropdown-content").hide();
+                if ($('.button').hasClass("showGenderButtonBorder"))
+                    $('.button').removeClass("showGenderButtonBorder");
+            }
+        })
+        $("#top, #middle").on('click', function(){
+            $("#selectedG").text($(this).text());
+            $(".dropdown-content").hide();
+                if ($('.button').hasClass("showGenderButtonBorder"))
+                    $('.button').removeClass("showGenderButtonBorder");
+        });
+        $(".button").click(function(){
+            $(this).toggleClass("showGenderButtonBorder");
+            $(".dropdown-content").toggle();
         });
     </script>
 </body1>

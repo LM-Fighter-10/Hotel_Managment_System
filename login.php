@@ -14,7 +14,6 @@
     $e = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $email = $_POST['email'];
-        $e = $email;
         $userId = $_POST['userId'];
         echo $email;
         $getCustomersForLogIn = "SELECT * FROM `customer` WHERE Email = '$email' AND CustomerID = '$userId'";

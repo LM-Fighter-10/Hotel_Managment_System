@@ -14,10 +14,14 @@
         $employees .= '<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
             <div class="rounded shadow overflow-hidden">
                 <div class="position-relative">
-                    <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">
-                    <a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
+                    <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">';
+        if ($isLoggedIn and $isLoggedInAsEmployee and isset($conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName']) and
+            $conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName'] == 'Manager'){
+            $employees .= '<a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
                         <i class="fas fa-pencil-alt"></i>
-                    </a>
+                    </a>';
+        }
+        $employees .= '
                     <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                         <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
                         <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
