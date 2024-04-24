@@ -257,7 +257,7 @@
                         </div>
                     </div>
                     <div class="text-center p-4 mt-3">
-                        <h5 class="fw-bold mb-0">' . $emp['FName'] . '</h5>
+                        <h5 class="fw-bold mb-0">' .$emp['FName'] . ' ' . $emp['LName']. '</h5>
                         </h5>
                         <small>' . $emp['RoleName'] . '</small>
                     </div>
