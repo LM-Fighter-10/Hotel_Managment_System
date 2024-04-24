@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    include_once "connect.php";
-    include 'Queries.php';
     include 'codeBlocks.php';
     $loginError = "";
     $script = "";
-    $erroDiv = '<div style="display: none" id="LoginErrorMsg" class="alert alert-danger" role="alert"></div>';
+    $erroDiv = '<div id="LoginErrorMsg" class="alert alert-danger" role="alert"></div>';
+    if (!isset($_SESSION['newCust'])){
+        $_SESSION['newCust'] = "";
+    }
     if (isset($_SESSION['username'])){
         header("Location: index.php");
         exit();
     }
-    $e = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $email = $_POST['email'];
         $userId = $_POST['userId'];
-        echo $email;
         $getCustomersForLogIn = "SELECT * FROM `customer` WHERE Email = '$email' AND CustomerID = '$userId'";
         $getEmployeesForLogIn = "SELECT * FROM `employee` WHERE Email = '$email' AND EID = '$userId'";
         $resultEmp = $conn->query($getEmployeesForLogIn);
         $resultCus = $conn->query($getCustomersForLogIn);
         if ($resultCus->num_rows == 0 && $resultEmp->num_rows == 0){
             $loginError = "Wrong Email or User ID";
-            $erroDiv = '<div style="display: block" id="LoginErrorMsg" class="alert alert-danger" role="alert">'
+            $erroDiv = '<div id="LoginErrorMsg" class="alert alert-danger showAlert" role="alert">'
                 .$loginError.'</div>';
         }else{
-            echo "Session Started";
             $_SESSION['username'] = $userId;
             $loginError = "";
             $erroDiv = '<div style="display: none" id="LoginErrorMsg" class="alert alert-danger" role="alert"></div>';
@@ -50,25 +48,36 @@
         position: relative; /* Ensure positioning context for pseudo-element */
     }
     .footer{
-        padding-top: 0px !important;
+        padding-top: 0 !important;
         margin-top: 40px !important;
     }
     .alert{
+        border: none !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
         width: 100%;
         text-align: center;
+        transition: all 0.3s ease-in-out;
+    }
+    .showAlert{
+        border: 1px solid transparent !important;
+        overflow: visible !important;
+        padding: 1rem 1rem !important;
+        margin-bottom: 1rem !important;
     }
     .social-account-container-a{
         color: #FEA116;
     }
 </style>
-<body1>
+<body>
     <div class="bg-white p-0">
         <?=$navBarBlock?>
         <div class="login-body">
             <div class="Login-container">
                 <div class="heading">Sign In</div>
                 <?=$erroDiv?>
-                <form id="LoginForm22" class="Login-form" method="POST">
+                <form id="LoginForm" class="Login-form" method="POST">
                     <input required="" class="input" type="text" name="userId" id="userId" placeholder="User ID">
                     <input required="" class="input" type="email" name="email" id="email" placeholder="E-mail">
                     <input class="login-button" type="submit" value="Sign In">
@@ -85,21 +94,34 @@
     <!-- Scripts -->
     <?=$scriptBlock?>
     <script>
+        const loginContainer = document.querySelector('.Login-container');
+        var newUser = "<?=$_SESSION['newCust']?>";
+        if (newUser){
+            loginContainer.children[1].classList = "alert alert-success showAlert";
+            loginContainer.style.padding = "245px 35px";
+            loginContainer.children[1].innerHTML = "Welcome " + newUser;
+            setTimeout(() => {
+                loginContainer.children[1].classList = "alert alert-success";
+                loginContainer.style.padding = "";
+                <?php unset($_SESSION['newCust']); ?>
+            }, 3000);
+            setTimeout(() => {
+                loginContainer.children[1].classList = "alert alert-danger";
+                loginContainer.children[1].innerHTML = "";
+            }, 3300);
+        } else if (loginContainer.children[1].innerHTML !== ""){
+            setTimeout(() => {
+                loginContainer.children[1].classList = "alert alert-danger";
+                loginContainer.children[1].innerHTML = "";
+            }, 3300);
+        } else if (loginContainer.children[1].innerHTML === ""){
+            loginContainer.children[1].classList = "alert alert-danger";
+            loginContainer.children[1].innerHTML = "";
+        }
         var LoginError = "";
         var ErrorDiv = document.getElementById('#LoginErrorMsg');
-        document.getElementsByClassName("login-button").onclick = function(){
-            ErrorDiv.innerHTML = "";
-            var form = document.getElementById('LoginForm22');
-            var formData = new FormData(form);
-            formData.append('email', document.getElementById('#email').value());
-            formData.append('userId', document.getElementById('#userId').value());
-            fetch('login.php', {
-                method: 'POST',
-                body: form
-            })
-        };
         $("#navbarCollapse a").each(function () {
             $(this).removeClass("active");
         });
     </script>
-</body1>
+</body>

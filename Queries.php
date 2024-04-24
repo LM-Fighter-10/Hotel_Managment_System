@@ -6,7 +6,7 @@
     $GetCustomerLoggedIn = "";
     $AddCustomer = "";
     $AddEmployee = "";
-    function AddCustomer($cid, $fname, $lname, $gender, $email, $phone, $cphone, $country, $city, $state, $zip){
+    function AddCustomer($cid, $fname, $lname, $gender, $email, $phone, $cphone, $country, $city, $state, $zip, $conn){
         $AddCustomer = "INSERT INTO `customer`(`CustomerID`, `FirstName`, `LastName`, `Gender`, `Email`, `PhoneNumber`, 
                        `ContactNumber`, `Country`, `City`, `State`, `Zip_Code`) VALUES 
                        ('$cid','$fname','$lname','$gender','$email','$phone','$cphone','$country','$city','$state','$zip')";
@@ -28,5 +28,32 @@
         }else {
             $isLoggedInAsEmployee = false; $isLoggedInAsCustomer = true;
         }
+    }
+    $SQLFunction_CheckCustID = "DELIMITER //
+                                CREATE FUNCTION IsCustomerIdTaken(
+                                    p_CustomerID CHAR(14)
+                                )
+                                RETURNS BIT
+                                BEGIN
+                                    DECLARE countExist INT;
+                                
+                                    SELECT COUNT(*) INTO countExist FROM Customer WHERE CustomerID = p_CustomerID;
+                                
+                                    IF countExist > 0 THEN
+                                        RETURN 0;
+                                    ELSE
+                                        RETURN 1;
+                                    END IF;
+                                END //
+                                
+                                DELIMITER ;";
+    function getNewCustID ($conn){
+        $newCustID = mt_rand(1000000000, 9999999999);
+        $result = $conn->query("SELECT IsCustomerIdTaken('$newCustID') AS isTaken;")->fetch_assoc();
+        while ($result['isTaken'] == 1){
+            $newCustID = mt_rand(1000000000, 9999999999);
+            $result = $conn->query("SELECT IsCustomerIdTaken('$newCustID') AS isTaken;")->fetch_assoc();
+        }
+        return "CUST".$newCustID;
     }
 ?>

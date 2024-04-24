@@ -1,4 +1,6 @@
 <?php
+    include_once "connect.php";
+    include 'Queries.php';
     $navBarBlock = '
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -26,15 +28,6 @@
                         <div class="h-100 d-inline-flex align-items-center py-2">
                             <i class="fa fa-phone-alt text-primary me-2"></i>
                             <p class="mb-0">+012 345 6789</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 px-5 text-end header-contact-icons">
-                        <div class="d-inline-flex align-items-center py-2">
-                            <a class="me-3" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="me-3" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="me-3" href=""><i class="fab fa-linkedin-in"></i></a>
-                            <a class="me-3" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="" href=""><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
@@ -78,7 +71,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,30 +102,22 @@
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>hotelier997@gmail.com</p>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                        </div>
                     </div>
                     <div class="col-lg-5 col-md-12">
                         <div class="row gy-5 g-4">
                             <div class="col-md-6">
                                 <h6 class="section-title text-start text-primary text-uppercase mb-4">Company</h6>
-                                <a class="btn btn-link" href="">About Us</a>
-                                <a class="btn btn-link" href="">Contact Us</a>
-                                <a class="btn btn-link" href="">Privacy Policy</a>
-                                <a class="btn btn-link" href="">Terms & Condition</a>
-                                <a class="btn btn-link" href="">Support</a>
+                                <a class="btn btn-link" href="about.php">About Us</a>
+                                <a class="btn btn-link" href="contact.php">Contact Us</a>
+                                <a class="btn btn-link" href="contact.php">Support</a>
                             </div>
                             <div class="col-md-6">
                                 <h6 class="section-title text-start text-primary text-uppercase mb-4">Services</h6>
-                                <a class="btn btn-link" href="">Food & Restaurant</a>
-                                <a class="btn btn-link" href="">Spa & Fitness</a>
-                                <a class="btn btn-link" href="">Sports & Gaming</a>
-                                <a class="btn btn-link" href="">Event & Party</a>
-                                <a class="btn btn-link" href="">GYM & Yoga</a>
+                                <a class="btn btn-link" href="service.php">Food & Restaurant</a>
+                                <a class="btn btn-link" href="service.php">Spa & Fitness</a>
+                                <a class="btn btn-link" href="service.php">Sports & Gaming</a>
+                                <a class="btn btn-link" href="service.php">Event & Party</a>
+                                <a class="btn btn-link" href="service.php">GYM & Yoga</a>
                             </div>
                         </div>
                     </div>
@@ -148,9 +133,7 @@
                         <div class="col-md-6 text-center text-md-end">
                             <div class="footer-menu">
                                 <a href="index.php">Home</a>
-                                <a href="">Cookies</a>
-                                <a href="">Help</a>
-                                <a href="">FQAs</a>
+                                <a href="contact.php">Help</a>
                             </div>
                         </div>
                     </div>
@@ -172,4 +155,116 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>';
+
+    function refreshRooms(){
+        global $conn, $rooms, $SelectingRoomStatus, $isLoggedIn, $isLoggedInAsEmployee;
+        $resultStatus =$conn->query($SelectingRoomStatus);
+        $rooms = "";
+        $roomNum = 1;$animationNum = 1;
+        while($room =$resultStatus->fetch_assoc()){
+            if ($roomNum == 4){
+                $roomNum = 1;
+            }
+            $rooms = $rooms.
+                '<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
+                    <div class="room-item shadow rounded overflow-hidden">
+                        <div class="position-relative">
+                            <img class="img-fluid" src="img/room-'. $roomNum .'.jpg" alt="">
+                            <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">$'.$room["Price_Per_Night"].'/Night</small>
+                        </div>
+                        <div class="p-4 mt-2">';
+            if ($isLoggedIn and $isLoggedInAsEmployee){
+                $rooms .= '<div class="d-flex justify-content-between mb-3">
+                                <h5 class="mb-0">Room Number '.$room['RoomNum'].'</h5>
+                                <a href="#" class="edit-icon top-0 end-0 p-0">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>';
+            }else{
+                $rooms .= '<div class="d-flex justify-content-center mb-3">
+                                <h5 class="mb-0">Room Number '.$room['RoomNum'].'</h5>';
+            }
+            $rooms .= '</div>
+                            <div class="d-flex mb-3 justify-content-around">
+                                <small class="border-end me-3 pe-3">';
+            if ($room['Capacity'] == 'Single'){
+                $rooms .= '<i class="fas fa-user text-primary me-2"></i>'. $room['Capacity'] .'</small>
+    
+                                <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                            </div>
+                            <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
+                            <div class="d-flex justify-content-center">
+    
+                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }else if ($room['Capacity'] == 'Double'){
+                $rooms .= '<i class="fas fa-user-friends text-primary me-2"></i>'. $room['Capacity'] .'</small>
+    
+                                <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                            </div>
+                            <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
+                            <div class="d-flex justify-content-center">
+    
+                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }else{
+                $rooms .= '<i class="fas fa-users text-primary me-2"></i>'. $room['Capacity'] .'</small>
+    
+                                <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                            </div>
+                            <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
+                            <div class="d-flex justify-content-center">
+    
+                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }
+            $roomNum++;
+            $animationNum++;
+        }
+    }
+    function refreshEmployees(){
+        global $conn, $employees, $SelectingAllEmployeeFullName, $isLoggedIn, $isLoggedInAsEmployee;
+        $query_run =mysqli_query($conn,$SelectingAllEmployeeFullName);
+        $employees = "";
+        $imageNum = 1;$animationNum = 1;
+        while($emp =$query_run->fetch_assoc()) {
+            if ($imageNum == 5){
+                $imageNum = 1;
+            }
+            $employees .= '<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
+                <div class="rounded shadow overflow-hidden">
+                    <div class="position-relative">
+                        <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">';
+            if ($isLoggedIn and $isLoggedInAsEmployee and isset($conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName']) and
+                $conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName'] == 'Manager'){
+                $employees .= '<a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>';
+            }
+            $employees .= '
+                        <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="text-center p-4 mt-3">
+                        <h5 class="fw-bold mb-0">' . $emp['FName'] . '</h5>
+                        </h5>
+                        <small>' . $emp['RoleName'] . '</small>
+                    </div>
+                </div>
+            </div>';
+            $imageNum++;
+            $animationNum++;
+        }
+    }
 ?>

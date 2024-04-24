@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    include_once "connect.php";
-    include 'Queries.php';
     include 'codeBlocks.php';
+    refreshEmployees();
 ?>
 <head>
     <?=$headerBlock?>
@@ -113,7 +112,6 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="">Explore More</a>
                     </div>
                     <div class="col-lg-6">
                         <div class="row g-3">
@@ -144,71 +142,8 @@
                     <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-2.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-3.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-4.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row g-4 justify-content-center">
+                    <?=$employees?>
                 </div>
             </div>
         </div>

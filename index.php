@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    include_once "connect.php";
-    include 'Queries.php';
     include 'codeBlocks.php';
+    refreshRooms();
+    refreshEmployees();
 ?>
 <head>
     <?=$headerBlock?>
@@ -32,10 +32,10 @@
                         <img class="w-100" src="img/carousel-2.jpg" alt="Image">
                         <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                             <div class="p-3" style="max-width: 700px;">
-                                <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Luxury Living</h6>
-                                <h1 class="display-3 text-white mb-4 animated slideInDown">Discover A Brand Luxurious Hotel</h1>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Rooms</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
+                                <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Elegant Escapes</h6>
+                                <h1 class="display-3 text-white mb-4 animated slideInDown">Explore elegance at our distinguished hotel retreat.</h1>
+                                <a href="room.php" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Rooms</a>
+                                <a href="booking.php" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="">Explore More</a>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="about.php">Explore More</a>
                     </div>
                     <div class="col-lg-6">
                         <div class="row g-3">
@@ -170,96 +170,7 @@
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
                 </div>
                 <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/room-1.jpg" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">$100/Night</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Junior Suite</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                                </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
-                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/room-2.jpg" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">$100/Night</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Executive Suite</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                                </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
-                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/room-3.jpg" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">$100/Night</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Super Deluxe</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                                </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
-                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?=$rooms?>
                 </div>
             </div>
         </div>
@@ -388,49 +299,6 @@
         <!-- Service End -->
 
 
-        <!-- Testimonial Start -->
-        <div class="container-xxl testimonial my-5 py-5 bg-dark wow zoomIn" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="owl-carousel testimonial-carousel py-5">
-                    <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                        <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 45px; height: 45px;">
-                            <div class="ps-3">
-                                <h6 class="fw-bold mb-1">Client Name</h6>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                        <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                    </div>
-                    <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                        <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 45px; height: 45px;">
-                            <div class="ps-3">
-                                <h6 class="fw-bold mb-1">Client Name</h6>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                        <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                    </div>
-                    <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                        <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 45px; height: 45px;">
-                            <div class="ps-3">
-                                <h6 class="fw-bold mb-1">Client Name</h6>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                        <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
-
-
         <!-- Team Start -->
         <div class="container-xxl py-5">
             <div class="container">
@@ -438,71 +306,8 @@
                     <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-1.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-2.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-3.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="rounded shadow overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/team-4.jpg" alt="">
-                                <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="text-center p-4 mt-3">
-                                <h5 class="fw-bold mb-0">Full Name</h5>
-                                <small>Designation</small>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row g-4 justify-content-center">
+                    <?=$employees?>
                 </div>
             </div>
         </div>

@@ -514,7 +514,6 @@
 .login-body{
     display: flex;
     width: 100%;
-    height: 680px;
     justify-content: center;
     align-items: center;
 }
@@ -543,6 +542,7 @@
     justify-content: center;
     align-items: center;
     height: 470px;
+    transition: all 0.3s ease-in-out;
 }
 
 .logout_HomeBtn, .login_RegBtn {
@@ -596,10 +596,6 @@
   color: rgb(254 161 22);
 }
 
-.Login-form {
-  margin-top: 20px;
-}
-
 .Login-form .input {
   width: 100%;
   background: white;
@@ -650,7 +646,7 @@
 }
 
 .social-account-container {
-    margin: auto;
+    margin: 20px;
     display: flex;
     justify-content: center;
 }
@@ -726,7 +722,7 @@
     padding: 25px 35px;
     border: 5px solid rgb(255, 255, 255);
     box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
-    margin: 50px;
+    margin: 50px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -738,7 +734,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 350px;
+  max-width: 400px;
   border-radius: 20px;
   position: relative;
 }

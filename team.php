@@ -1,43 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    include_once "connect.php";
-    include 'Queries.php';
     include 'codeBlocks.php';
-    $query_run =mysqli_query($conn,$SelectingAllEmployeeFullName);
-    $employees = "";
-    $imageNum = 1;$animationNum = 1;
-    while($emp =$query_run->fetch_assoc()) {
-        if ($imageNum == 5){
-            $imageNum = 1;
-        }
-        $employees .= '<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
-            <div class="rounded shadow overflow-hidden">
-                <div class="position-relative">
-                    <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">';
-        if ($isLoggedIn and $isLoggedInAsEmployee and isset($conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName']) and
-            $conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName'] == 'Manager'){
-            $employees .= '<a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>';
-        }
-        $employees .= '
-                    <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="text-center p-4 mt-3">
-                    <h5 class="fw-bold mb-0">' . $emp['FName'] . '</h5>
-                    </h5>
-                    <small>' . $emp['RoleName'] . '</small>
-                </div>
-            </div>
-        </div>';
-        $imageNum++;
-        $animationNum++;
-    }
+    refreshEmployees();
 ?>
 <head>
     <?=$headerBlock?>

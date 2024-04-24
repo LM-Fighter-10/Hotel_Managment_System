@@ -1,80 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-    include_once "connect.php";
-    include 'Queries.php';
     include 'codeBlocks.php';
-    $resultStatus =$conn->query($SelectingRoomStatus);
-    $rooms = "";
-    $roomNum = 1;$animationNum = 1;
-    while($room =$resultStatus->fetch_assoc()){
-        if ($roomNum == 4){
-            $roomNum = 1;
-        }
-        $rooms = $rooms.
-            '<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
-                <div class="room-item shadow rounded overflow-hidden">
-                    <div class="position-relative">
-                        <img class="img-fluid" src="img/room-'. $roomNum .'.jpg" alt="">
-                        <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">$'.$room["Price_Per_Night"].'/Night</small>
-                    </div>
-                    <div class="p-4 mt-2">';
-        if ($isLoggedIn and $isLoggedInAsEmployee){
-            $rooms .= '<div class="d-flex justify-content-between mb-3">
-                            <h5 class="mb-0">Room Number '.$room['RoomNum'].'</h5>
-                            <a href="#" class="edit-icon top-0 end-0 p-0">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>';
-        }else{
-            $rooms .= '<div class="d-flex justify-content-center mb-3">
-                            <h5 class="mb-0">Room Number '.$room['RoomNum'].'</h5>';
-        }
-        $rooms .= '</div>
-                        <div class="d-flex mb-3 justify-content-around">
-                            <small class="border-end me-3 pe-3">';
-        if ($room['Capacity'] == 'Single'){
-            $rooms .= '<i class="fas fa-user text-primary me-2"></i>'. $room['Capacity'] .'</small>
-
-                            <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                        </div>
-                        <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
-                        <div class="d-flex justify-content-center">
-
-                            <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-        }else if ($room['Capacity'] == 'Double'){
-            $rooms .= '<i class="fas fa-user-friends text-primary me-2"></i>'. $room['Capacity'] .'</small>
-
-                            <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                        </div>
-                        <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
-                        <div class="d-flex justify-content-center">
-
-                            <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-        }else{
-            $rooms .= '<i class="fas fa-users text-primary me-2"></i>'. $room['Capacity'] .'</small>
-
-                            <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                        </div>
-                        <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
-                        <div class="d-flex justify-content-center">
-
-                            <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-        }
-        $roomNum++;
-        $animationNum++;
-    }
+    refreshRooms();
 ?>
 <head>
     <?=$headerBlock?>
@@ -160,50 +88,6 @@
             </div>
         </div>
         <!-- Room End -->
-
-
-        <!-- Testimonial Start -->
-        <div class="container-xxl testimonial mt-5 py-5 bg-dark wow zoomIn" data-wow-delay="0.1s" style="margin-bottom: 90px;">
-            <div class="container">
-                <div class="owl-carousel testimonial-carousel py-5">
-                    <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                        <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 45px; height: 45px;">
-                            <div class="ps-3">
-                                <h6 class="fw-bold mb-1">Client Name</h6>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                        <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                    </div>
-                    <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                        <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 45px; height: 45px;">
-                            <div class="ps-3">
-                                <h6 class="fw-bold mb-1">Client Name</h6>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                        <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                    </div>
-                    <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                        <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                        <div class="d-flex align-items-center">
-                            <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 45px; height: 45px;">
-                            <div class="ps-3">
-                                <h6 class="fw-bold mb-1">Client Name</h6>
-                                <small>Profession</small>
-                            </div>
-                        </div>
-                        <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
-
 
         <!-- Newsletter Start -->
         <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
