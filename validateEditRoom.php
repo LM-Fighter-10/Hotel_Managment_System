@@ -43,7 +43,7 @@
         if(isset($_POST['pricePerNight'])) {
             $pricePerNight = $_POST['pricePerNight'];
             if ($pricePerNight != "") {
-                if (!is_numeric($pricePerNight) || $pricePerNight <= 0 || $pricePerNight > 2147483647) {
+                if (!is_numeric($pricePerNight) || $pricePerNight <= 0 || $pricePerNight > 99999999.99) {
                     // Invalid price per night, set error flag
                     $response['pricePerNightError'] = true;
                     if (!is_numeric($pricePerNight)){
