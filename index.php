@@ -108,7 +108,7 @@
                     <div class="col-lg-6">
                         <h6 class="section-title text-start text-primary text-uppercase">About Us</h6>
                         <h1 class="mb-4">Welcome to <span class="text-primary text-uppercase">Hotelier</span></h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                        <p class="mb-4">Discover a world of elegance and comfort at our boutique hotel. From the moment you arrive, you’ll be greeted by warm smiles and impeccable service. Our website is your gateway to an unforgettable stay. Explore our luxurious rooms, indulge in gourmet dining, and unwind by the poolside. Whether you’re here for business or leisure, our hotel promises an exceptional experience. Book your stay today and let us create lasting memories for you</p>
                         <div class="row g-3 pb-4">
                             <div class="col-sm-4 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="border rounded p-1">
@@ -184,9 +184,9 @@
                     <div class="p-5">
                         <h6 class="section-title text-start text-white text-uppercase mb-3">Luxury Living</h6>
                         <h1 class="text-white mb-4">Discover A Brand Luxurious Hotel</h1>
-                        <p class="text-white mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                        <a href="" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
-                        <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
+                        <p class="text-white mb-4"> At our hotel, we believe that every guest deserves a memorable experience. Our website is your virtual concierge, ready to guide you through a world of comfort and luxury. Explore our elegantly appointed rooms, each designed with your relaxation in mind. From the plush bedding to the panoramic views, every detail has been carefully curated. Discover our award-winning dining options, where culinary delights await your taste buds. Whether you’re planning a romantic getaway or a business trip, our website is your passport to exceptional hospitality. Book now and let us exceed your expectations.</p>
+                        <a href="room.php" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
+                        <a href="booking.php" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -235,7 +235,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Rooms & Appartment</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Our rooms offer comfort and style—sanctuaries where you can sink into plush bedding, enjoy panoramic views, and experience personalized service. Whether a cozy single room or spacious suite, tranquility awaits.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
@@ -246,7 +246,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Food & Restaurant</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">From gourmet restaurants to cozy cafes, our culinary team crafts dishes celebrating local flavors. Savor farm-to-table ingredients, fine wines, and impeccable service. Romantic dinners or casual brunches create lasting memories.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -257,7 +257,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Spa & Fitness</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Step into our spa, leave the world behind. Rejuvenating treatments—from soothing massages to invigorating facials—await. Unwind in the sauna, pool, or yoga class. Our state-of-the-art gym balances mind, body, and soul.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
@@ -268,7 +268,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Sports & Gaming</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Sports enthusiasts, rejoice! Hit the tennis court, practice golf, or dive into the pool. For gaming fans, our arcade and casino await. Compete or have fun—our facilities cater to all ages..</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -279,7 +279,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Event & Party</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0"> Versatile event spaces—from weddings to corporate gatherings—are elegantly tailored to your vision. Our experienced team ensures seamless execution, creating unforgettable moments.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
@@ -290,7 +290,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">GYM & Yoga</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Our fitness center is a lifestyle, not just equipment. Early risers hit the treadmill, yoga enthusiasts find solace in our serene studio. Whether seasoned or a beginner, our gym fosters well-being. Breathe, stretch, find balance.</p>
                         </a>
                     </div>
                 </div>
@@ -300,7 +300,7 @@
 
 
         <!-- Team Start -->
-        <div class="container-xxl py-5">
+        <div class="container-xxl py-5" style="margin-bottom: 200px;">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
@@ -313,24 +313,6 @@
         </div>
         <!-- Team End -->
 
-
-        <!-- Newsletter Start -->
-        <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 border rounded p-1">
-                    <div class="border rounded text-center p-1">
-                        <div class="bg-white rounded text-center p-5">
-                            <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
-                            <div class="position-relative mx-auto" style="max-width: 400px;">
-                                <input class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
-                                <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Newsletter Start -->
         <?=$footerBlock?>
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

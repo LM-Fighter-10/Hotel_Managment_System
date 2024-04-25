@@ -1,6 +1,6 @@
 <?php
     $SelectingAllHotelObjects = "SELECT * FROM Hotel";
-    $SelectingRoomStatus ="SELECT * FROM `rooms`";
+    $SelectingRoomStatus ="SELECT * FROM `rooms` as r JOIN `hotel` as h ON r.BranchID=h.BranchID";
     $SelectingAllEmployeeFullName = "SELECT * FROM Employee";
     $GetEmployeeLoggedIn = "";
     $GetCustomerLoggedIn = "";

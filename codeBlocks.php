@@ -157,7 +157,7 @@
     <script src="js/main.js"></script>';
 
     function refreshRooms(){
-        global $conn, $rooms, $SelectingRoomStatus, $isLoggedIn, $isLoggedInAsEmployee;
+        global $conn, $rooms, $SelectingRoomStatus, $isLoggedIn, $isLoggedInAsEmployee, $roomNum;
         $resultStatus =$conn->query($SelectingRoomStatus);
         $rooms = "";
         $roomNum = 1;$animationNum = 1;
@@ -175,13 +175,13 @@
                         <div class="p-4 mt-2">';
             if ($isLoggedIn and $isLoggedInAsEmployee){
                 $rooms .= '<div class="d-flex justify-content-between mb-3">
-                                <h5 class="mb-0">Room Number '.$room['RoomNum'].'</h5>
-                                <a href="#" class="edit-icon top-0 end-0 p-0">
+                                <h5 class="mb-0">Room '.$room['RoomNum'].'</h5>
+                                <a id="pen'. $roomNum .'" class="edit-icon top-0 end-0 p-0">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>';
             }else{
                 $rooms .= '<div class="d-flex justify-content-center mb-3">
-                                <h5 class="mb-0">Room Number '.$room['RoomNum'].'</h5>';
+                                <h5 class="mb-0">Room '.$room['RoomNum'].'</h5>';
             }
             $rooms .= '</div>
                             <div class="d-flex mb-3 justify-content-around">
@@ -191,9 +191,17 @@
     
                                 <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                             </div>
-                            <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
+                            <div class="d-flex justify-content-between m-4">
+                                <div class="d-flex flex-column align-items-center">
+                                    <h6 class="mb-0" style="font-size: 0.9rem">Branch</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['BranchID'].')</h6>
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <h6 class="mb-0" style="font-size: 0.9rem">Status</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['Status'].')</h6>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-center">
-    
                                 <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
                             </div>
                         </div>
@@ -204,7 +212,16 @@
     
                                 <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                             </div>
-                            <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
+                            <div class="d-flex justify-content-between m-4">
+                                <div class="d-flex flex-column align-items-center">
+                                    <h6 class="mb-0" style="font-size: 0.9rem">Branch</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['BranchID'].')</h6>
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <h6 class="mb-0" style="font-size: 0.9rem">Status</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['Status'].')</h6>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-center">
     
                                 <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
@@ -217,7 +234,16 @@
     
                                 <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                             </div>
-                            <p class="text-body mb-3" style="text-align: center">'.$room['Status'].'</p>
+                            <div class="d-flex justify-content-between m-4">
+                                <div class="d-flex flex-column align-items-center">
+                                    <h6 class="mb-0" style="font-size: 0.9rem">Branch</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['BranchID'].')</h6>
+                                </div>
+                                <div class="d-flex flex-column align-items-center">
+                                    <h6 class="mb-0" style="font-size: 0.9rem">Status</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['Status'].')</h6>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-center">
     
                                 <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
@@ -229,13 +255,15 @@
             $roomNum++;
             $animationNum++;
         }
+        $roomNum--;
     }
     function refreshEmployees(){
-        global $conn, $employees, $SelectingAllEmployeeFullName, $isLoggedIn, $isLoggedInAsEmployee;
-        $query_run =mysqli_query($conn,$SelectingAllEmployeeFullName);
+        global $conn, $employees, $SelectingAllEmployeeFullName, $isLoggedIn, $GetEmployeeLoggedIn, $isLoggedInAsEmployee, $empNo;
+        $Emp_query_run = $conn->query($SelectingAllEmployeeFullName);
         $employees = "";
         $imageNum = 1;$animationNum = 1;
-        while($emp =$query_run->fetch_assoc()) {
+        $empNo = 1;
+        while($emp = $Emp_query_run->fetch_assoc()) {
             if ($imageNum == 5){
                 $imageNum = 1;
             }
@@ -245,7 +273,7 @@
                         <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">';
             if ($isLoggedIn and $isLoggedInAsEmployee and isset($conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName']) and
                 $conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName'] == 'Manager'){
-                $employees .= '<a href="#" class="edit-icon position-absolute top-0 end-0 p-2">
+                $employees .= '<a id="pen'. $empNo .'" class="edit-icon position-absolute top-0 end-0 p-2">
                             <i class="fas fa-pencil-alt"></i>
                         </a>';
             }
@@ -265,6 +293,8 @@
             </div>';
             $imageNum++;
             $animationNum++;
+            $empNo++;
         }
+        $empNo--;
     }
 ?>

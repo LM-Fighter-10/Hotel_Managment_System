@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Rooms & Appartment</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Our rooms offer comfort and style—sanctuaries where you can sink into plush bedding, enjoy panoramic views, and experience personalized service. Whether a cozy single room or spacious suite, tranquility awaits.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Food & Restaurant</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">From gourmet restaurants to cozy cafes, our culinary team crafts dishes celebrating local flavors. Savor farm-to-table ingredients, fine wines, and impeccable service. Romantic dinners or casual brunches create lasting memories.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Spa & Fitness</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Step into our spa, leave the world behind. Rejuvenating treatments—from soothing massages to invigorating facials—await. Unwind in the sauna, pool, or yoga class. Our state-of-the-art gym balances mind, body, and soul.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Sports & Gaming</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Sports enthusiasts, rejoice! Hit the tennis court, practice golf, or dive into the pool. For gaming fans, our arcade and casino await. Compete or have fun—our facilities cater to all ages.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -134,7 +134,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">Event & Party</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0"> Versatile event spaces—from weddings to corporate gatherings—are elegantly tailored to your vision. Our experienced team ensures seamless execution, creating unforgettable moments.</p>
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <h5 class="mb-3">GYM & Yoga</h5>
-                            <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
+                            <p class="text-body mb-0">Our fitness center is a lifestyle, not just equipment. Early risers hit the treadmill, yoga enthusiasts find solace in our serene studio. Whether seasoned or a beginner, our gym fosters well-being. Breathe, stretch, find balance.</p>
                         </a>
                     </div>
                 </div>

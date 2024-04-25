@@ -33,6 +33,7 @@
     .login_RegBtn{
         display: none !important;
     }
+
     .login-body{
         background-image: url(img/login_cover.jpg);
         background-repeat: no-repeat;
@@ -157,7 +158,7 @@
                             <span class="field-label">Zip Code</span>
                         </label>
                     </div>
-                    <button id="signUpSubmit" type="submit" class="signUp-submit">Submit</button>
+                    <input id="signUpSubmit" class="signUp-submit mb-0" type="submit" value="Register">
 <!--                    <p class="alreadHaveAccount">Already have an acount ? <a href="login.php">Sign In</a> </p>-->
                     <div class="social-account-container">
                         <a href="login.php" class="social-account-container-a">Don't Have An Accout?</a>

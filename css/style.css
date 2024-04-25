@@ -620,7 +620,7 @@
   border-inline: 2px solid #FEA116;
 }
 
-.Login-form .login-button {
+.Login-form .login-button, .signUp-submit {
     font-size: 18px;
     display: block;
     width: 100%;
@@ -635,12 +635,16 @@
     transition: all 0.2s ease-in-out;
 }
 
-.Login-form .login-button:hover {
+.fa-pencil-alt{
+    cursor: pointer !important;
+}
+
+.Login-form .login-button:hover, .signUp-submit:hover {
   transform: scale(1.03);
   box-shadow: rgb(194 143 47 / 100%) 0px 20px 10px -15px;
 }
 
-.Login-form .login-button:active {
+.Login-form .login-button:active, .signUp-submit:active {
   transform: scale(0.95);
   box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
 }
