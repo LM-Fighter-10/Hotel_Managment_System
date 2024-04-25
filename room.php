@@ -117,6 +117,22 @@
         transition: 0.3s ease;
     }
 
+    #roomNumberMainLabel, #roomNumber{
+        cursor: initial;
+        user-select: none;
+    }
+
+    #roomNumber{
+            color: #aaaaaa;
+    }
+
+    #roomNumberLabel{
+        color: #FEA116;
+        top: 0px;
+        font-size: 0.9em;
+        font-weight: 600;
+    }
+
     .roomEditForm label .input:placeholder-shown + span {
       top: 12.5px;
       font-size: 0.9em;
@@ -184,6 +200,27 @@
         opacity: 1;
         z-index: 5;
     }
+    #EditErrorMsg{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        height: 0;
+        padding: 0;
+        margin-bottom: 0;
+        border: none;
+        transition: all 0.3s ease-in-out;
+    }
+    .showEditErrorMsg{
+        height: auto !important;
+        padding: 1rem 1rem !important;
+        margin-bottom: 1rem !important;
+        border: 1px solid transparent !important;
+    }
+    .alert{
+        width: 100%;
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -211,26 +248,27 @@
                 <p class="roomEditTitle">EDIT ROOM</p>
                 <p class="crossExitEdit" id="exitEdit">✖</p>
             </div>
-            <label for="roomNumber" id="roomNumberLabel">
-                <input class="input" type="text" id="roomNumber" name="roomNumber" required>
-                <span>Room number</span>
+            <div id="EditErrorMsg" class="alert alert-danger" role="alert"></div>
+            <label for="roomNumber" id="roomNumberMainLabel">
+                <input class="input" type="text" id="roomNumber" name="roomNumber" readonly>
+                <span id="roomNumberLabel">Room number</span>
             </label>
 
             <div class="roomEditFlex">
-                <label for="branchId" style="width: 200px;" id="branchIdLabel">
+                <label for="branchId" style="width: 200px;">
                     <input class="input" type="text" id="branchId" name="branchId" required>
-                    <span>Branch ID</span>
+                    <span id="branchIdLabel">Branch ID</span>
                 </label>
 
-                <label for="pricePerNight" style="width: 200px;" id="pricePerNightLabel">
+                <label for="pricePerNight" style="width: 200px;">
                     <input class="input" type="text" id="pricePerNight" name="pricePerNight" required>
-                    <span>Price / Night</span>
+                    <span id="pricePerNightLabel">Price / Night</span>
                 </label>
             </div>
 
             <label for="roomCapacity">Room Capacity:</label>
             <select class="dropdownEditRoom" id="roomCapacity" name="capacity">
-                <option value="Single">Single</option>
+                <option value="Single" selected>Single</option>
                 <option value="Double">Double</option>
                 <option value="Triple">Triple</option>
                 <option value="Suite">Suite</option>
@@ -238,9 +276,9 @@
 
             <label for="status">Status:</label>
             <select class="dropdownEditRoom" id="status" name="status">
-                <option value="available">Available</option>
-                <option value="occupied">Occupied</option>
-                <option value="maintenance">Maintenance</option>
+                <option value="Available" selected>Available</option>
+                <option value="Occupied">Occupied</option>
+                <option value="Under Maintenance">Under Maintenance</option>
             </select>
 
             <input type="button" class="roomEditSubmit" id="roomEditSubmitBtn" value="Edit Room">
@@ -298,7 +336,7 @@
                     <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
                 </div>
-                <div class="row g-4 position-relative">
+                <div class="row g-4 position-relative" id="roomsContainer">
                     <?=$rooms?>
                 </div>
             </div>
@@ -325,65 +363,146 @@
 <script>
     const roomEditForm = document.getElementById('RoomEditForm');
     const roomEditBackgroundDiv = document.getElementById('backgroundCover');
-    document.getElementById('exitEdit').onclick = function () {
-        if (roomEditForm.classList.contains('showRoomEditForm'))
-            roomEditForm.classList.remove('showRoomEditForm');
-        if (roomEditBackgroundDiv.classList.contains('showBackground-cover'))
-            roomEditBackgroundDiv.classList.remove('showBackground-cover');
-        document.body.style.overflow = '';
-    }
+    const roomNumber = document.getElementById('roomNumber');
+    const branchId = document.getElementById('branchId');
+    const pricePerNight = document.getElementById('pricePerNight');
+    const roomCapacit = document.getElementById('roomCapacity');
+    const roomStatus = document.getElementById('status');
     var selectedRoomNum = '';
-    for (let x=1; x <= <?=$roomNum?>; x++){
-        document.getElementById("pen" + x).onclick = function () {
-            selectedRoomNum = this.parentNode.children[0].innerHTML.replace('Room ', '')
-            roomEditForm.classList.add('showRoomEditForm');
-            roomEditBackgroundDiv.classList.add('showBackground-cover');
-            document.body.style.overflow = 'hidden';
+
+    function roomsScript() {
+        document.getElementById('exitEdit').onclick = function () {
+            if (roomEditForm.classList.contains('showRoomEditForm'))
+                roomEditForm.classList.remove('showRoomEditForm');
+            if (roomEditBackgroundDiv.classList.contains('showBackground-cover'))
+                roomEditBackgroundDiv.classList.remove('showBackground-cover');
+            document.body.style.overflow = '';
+            document.getElementById('EditErrorMsg').classList.remove('showEditErrorMsg');
+            // roomNumber.value = ''; branchId.value = ''; pricePerNight.value = '';
+            roomNumber.parentNode.children[1].style.color = '';
+            branchId.parentNode.children[1].style.color = '';
+            pricePerNight.parentNode.children[1].style.color = '';
+            roomCapacit.selectedIndex = 0;
+            roomStatus.selectedIndex = 0;
+        }
+        for (let x = 1; x <= <?=$roomInd?>; x++) {
+            document.getElementById("pen" + x).onclick = function () {
+                selectedRoomNum = this.parentNode.children[0].innerHTML.replace('Room ', '')
+                roomEditForm.classList.add('showRoomEditForm');
+                roomNumber.value = selectedRoomNum;
+                roomNumber.focus();
+                branchId.value = document.getElementById('RoomBranchID' + x).innerHTML;
+                pricePerNight.value = document.getElementById('RoomPricePerNight' + x).innerHTML;
+                if (document.getElementById('RoomCapacity' + x).innerHTML === 'Single') {
+                    roomCapacit.selectedIndex = 0;
+                } else if (document.getElementById('RoomCapacity' + x).innerHTML === 'Double') {
+                    roomCapacit.selectedIndex = 1;
+                } else if (document.getElementById('RoomCapacity' + x).innerHTML === 'Triple') {
+                    roomCapacit.selectedIndex = 2;
+                } else if (document.getElementById('RoomCapacity' + x).innerHTML === 'Suite') {
+                    roomCapacit.selectedIndex = 3;
+                }
+                if (document.getElementById('RoomStatus' + x).innerHTML === 'Available') {
+                    roomStatus.selectedIndex = 0;
+                } else if (document.getElementById('RoomStatus' + x).innerHTML === 'Occupied') {
+                    roomStatus.selectedIndex = 1;
+                } else if (document.getElementById('RoomStatus' + x).innerHTML === 'Under Maintenance') {
+                    roomStatus.selectedIndex = 2;
+                }
+
+                roomEditBackgroundDiv.classList.add('showBackground-cover');
+                document.body.style.overflow = 'hidden';
+            }
         }
     }
 
-    // document.getElementById('roomEditSubmitBtn').onclick = function () {
-    //
-    // }
+    var pricePerNightErrorMsg = "", branchIdErrorMsg = "", roomNumberErrorMsg = "";
+    // Function to validate input fields
+    function validateInputs() {
 
-    document.getElementById('roomNumber').addEventListener('input', function() {
-        const roomNumber = this.value;
-        fetch('validate.php?roomNumber=' + roomNumber)
-            .then(response => response.text())
+        // Send data to PHP script for validation via fetch
+        fetch('validateEditRoom.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                roomNumber: roomNumber.value,
+                branchId: branchId.value,
+                pricePerNight: pricePerNight.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.branchIdError || data.pricePerNightError) {
+                document.getElementById('EditErrorMsg').classList.add('showEditErrorMsg');
+                if (data.branchIdError){
+                    branchIdErrorMsg = data.branchIdErrorMsg;
+                    if (!document.getElementById('EditErrorMsg').innerHTML
+                        .includes("<span>" + data.branchIdErrorMsg + "</span>")){
+                        document.getElementById('EditErrorMsg').innerHTML +=
+                            "<span>" + data.branchIdErrorMsg + "</span>";
+                    }
+                } else{
+                    document.getElementById('EditErrorMsg').innerHTML =
+                        document.getElementById('EditErrorMsg').innerHTML
+                            .replace("<span>" + branchIdErrorMsg + "</span>", "");
+                }
+                if (data.pricePerNightError){
+                    pricePerNightErrorMsg = data.pricePerNightErrorMsg;
+                    if (!document.getElementById('EditErrorMsg').innerHTML
+                        .includes("<span>" + data.pricePerNightErrorMsg + "</span>")){
+                        document.getElementById('EditErrorMsg').innerHTML +=
+                            "<span>" + data.pricePerNightErrorMsg + "</span>";
+                    }
+                } else{
+                    document.getElementById('EditErrorMsg').innerHTML =
+                        document.getElementById('EditErrorMsg').innerHTML
+                            .replace("<span>" + pricePerNightErrorMsg + "</span>", "");
+                }
+            } else {
+                document.getElementById('EditErrorMsg').classList.remove('showEditErrorMsg');
+                document.getElementById('EditErrorMsg').innerHTML = "";
+            }
+            // Update label colors based on validation results
+            document.getElementById('branchIdLabel').style.color = data.branchIdError ? 'red' : '';
+            document.getElementById('pricePerNightLabel').style.color = data.pricePerNightError ? 'red' : '';
+        });
+    }
+
+    roomsScript();
+
+    // Add event listeners to input fields to trigger validation
+    document.getElementById('branchId').addEventListener('input', validateInputs);
+    document.getElementById('pricePerNight').addEventListener('input', validateInputs);
+
+    document.getElementById('roomEditSubmitBtn').onclick = function () {
+        validateInputs();
+        if (document.getElementById('EditErrorMsg').innerHTML === ""){
+            fetch('roomEditSubmit.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    roomNumber: selectedRoomNum,
+                    branchId: branchId.value,
+                    pricePerNight: pricePerNight.value,
+                    capacity: roomCapacit.value,
+                    status: roomStatus.value
+                })
+            })
+            .then(response => response.json())
             .then(data => {
-                if (data === 'error') {
-                    document.getElementById('roomNumberLabel').style.color = 'red';
-                } else {
-                    document.getElementById('roomNumberLabel').style.color = '';
+                if (data.success){
+                    document.getElementById('exitEdit').click();
+                    // location.reload();
+                    document.getElementById('roomsContainer').innerHTML = data.rooms;
+                    roomsScript();
                 }
             });
-    });
-
-    document.getElementById('branchId').addEventListener('input', function() {
-        const branchId = this.value;
-        fetch('validate.php?branchId=' + branchId)
-            .then(response => response.text())
-            .then(data => {
-                if (data === 'error') {
-                    document.getElementById('branchIdLabel').style.color = 'red';
-                } else {
-                    document.getElementById('branchIdLabel').style.color = '';
-                }
-            });
-    });
-
-    document.getElementById('pricePerNight').addEventListener('input', function() {
-        const pricePerNight = this.value;
-        fetch('validate.php?pricePerNight=' + pricePerNight)
-            .then(response => response.text())
-            .then(data => {
-                if (data === 'error') {
-                    document.getElementById('pricePerNightLabel').style.color = 'red';
-                } else {
-                    document.getElementById('pricePerNightLabel').style.color = '';
-                }
-            });
-    });
+        }
+    }
 
 </script>
 </html>

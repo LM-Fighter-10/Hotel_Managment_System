@@ -157,26 +157,28 @@
     <script src="js/main.js"></script>';
 
     function refreshRooms(){
-        global $conn, $rooms, $SelectingRoomStatus, $isLoggedIn, $isLoggedInAsEmployee, $roomNum;
+        global $conn, $rooms, $SelectingRoomStatus, $isLoggedIn, $isLoggedInAsEmployee, $roomInd;
         $resultStatus =$conn->query($SelectingRoomStatus);
         $rooms = "";
-        $roomNum = 1;$animationNum = 1;
+        $roomInd = 1;$animationNum = 1;
         while($room =$resultStatus->fetch_assoc()){
-            if ($roomNum == 4){
-                $roomNum = 1;
+            if ($roomInd == 4){
+                $roomInd = 1;
             }
             $rooms = $rooms.
                 '<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
                     <div class="room-item shadow rounded overflow-hidden">
                         <div class="position-relative">
-                            <img class="img-fluid" src="img/room-'. $roomNum .'.jpg" alt="">
-                            <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">$'.$room["Price_Per_Night"].'/Night</small>
+                            <img class="img-fluid" src="img/room-'. $roomInd .'.jpg" alt="">
+                            <small class="position-absolute start-0 
+                            top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">$<span id="RoomPricePerNight'. $roomInd .'">'.$room["Price_Per_Night"].'</span>/Night
+                            </small>
                         </div>
                         <div class="p-4 mt-2">';
             if ($isLoggedIn and $isLoggedInAsEmployee){
                 $rooms .= '<div class="d-flex justify-content-between mb-3">
                                 <h5 class="mb-0">Room '.$room['RoomNum'].'</h5>
-                                <a id="pen'. $roomNum .'" class="edit-icon top-0 end-0 p-0">
+                                <a id="pen'. $roomInd .'" class="edit-icon top-0 end-0 p-0">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>';
             }else{
@@ -187,18 +189,20 @@
                             <div class="d-flex mb-3 justify-content-around">
                                 <small class="border-end me-3 pe-3">';
             if ($room['Capacity'] == 'Single'){
-                $rooms .= '<i class="fas fa-user text-primary me-2"></i>'. $room['Capacity'] .'</small>
+                $rooms .= '<i class="fas fa-user text-primary me-2"></i><span id="RoomCapacity'. $roomInd .'">'. $room['Capacity'] .'</spanid></small>
     
                                 <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                             </div>
                             <div class="d-flex justify-content-between m-4">
                                 <div class="d-flex flex-column align-items-center">
                                     <h6 class="mb-0" style="font-size: 0.9rem">Branch</h6>
-                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['BranchID'].')</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">
+                                    (<span id="RoomBranchID'. $roomInd .'">'.$room['BranchID'].'</span>)</h6>
                                 </div>
                                 <div class="d-flex flex-column align-items-center">
                                     <h6 class="mb-0" style="font-size: 0.9rem">Status</h6>
-                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['Status'].')</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">
+                                    (<span id="RoomStatus'. $roomInd .'">'.$room['Status'].'</span>)</h6>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
@@ -208,18 +212,19 @@
                     </div>
                 </div>';
             }else if ($room['Capacity'] == 'Double'){
-                $rooms .= '<i class="fas fa-user-friends text-primary me-2"></i>'. $room['Capacity'] .'</small>
+                $rooms .= '<i class="fas fa-user-friends text-primary me-2"></i><span id="RoomCapacity'. $roomInd .'">'. $room['Capacity'] .'</span></small>
     
                                 <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                             </div>
                             <div class="d-flex justify-content-between m-4">
                                 <div class="d-flex flex-column align-items-center">
                                     <h6 class="mb-0" style="font-size: 0.9rem">Branch</h6>
-                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['BranchID'].')</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">
+                                    (<span id="RoomBranchID'. $roomInd .'">'.$room['BranchID'].'</span>)</h6>
                                 </div>
                                 <div class="d-flex flex-column align-items-center">
                                     <h6 class="mb-0" style="font-size: 0.9rem">Status</h6>
-                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['Status'].')</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">(<span id="RoomStatus'. $roomInd .'">'.$room['Status'].'</span>)</h6>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
@@ -230,18 +235,19 @@
                     </div>
                 </div>';
             }else{
-                $rooms .= '<i class="fas fa-users text-primary me-2"></i>'. $room['Capacity'] .'</small>
+                $rooms .= '<i class="fas fa-users text-primary me-2"></i><span id="RoomCapacity'. $roomInd .'">'. $room['Capacity'] .'</span></small>
     
                                 <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
                             </div>
                             <div class="d-flex justify-content-between m-4">
                                 <div class="d-flex flex-column align-items-center">
                                     <h6 class="mb-0" style="font-size: 0.9rem">Branch</h6>
-                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['BranchID'].')</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">
+                                    (<span id="RoomBranchID'. $roomInd .'">'.$room['BranchID'].'</span>)</h6>
                                 </div>
                                 <div class="d-flex flex-column align-items-center">
                                     <h6 class="mb-0" style="font-size: 0.9rem">Status</h6>
-                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">('.$room['Status'].')</h6>
+                                    <h6 class="text-body mb-0" style="font-size: 0.9rem">(<span id="RoomStatus'. $roomInd .'">'.$room['Status'].'</span>)</h6>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
@@ -252,10 +258,10 @@
                     </div>
                 </div>';
             }
-            $roomNum++;
+            $roomInd++;
             $animationNum++;
         }
-        $roomNum--;
+        $roomInd--;
     }
     function refreshEmployees(){
         global $conn, $employees, $SelectingAllEmployeeFullName, $isLoggedIn, $GetEmployeeLoggedIn, $isLoggedInAsEmployee, $empNo;
