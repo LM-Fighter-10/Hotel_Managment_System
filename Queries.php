@@ -1,6 +1,7 @@
 <?php
     $SelectingAllHotelObjects = "SELECT * FROM Hotel";
     $SelectingRoomStatus ="SELECT * FROM `rooms` as r JOIN `hotel` as h ON r.BranchID=h.BranchID";
+    $NumberOfRoom ="SELECT COUNT(*) as count FROM `rooms`";
     $SelectingAllEmployeeFullName = "SELECT * FROM Employee";
     $GetEmployeeLoggedIn = "";
     $GetCustomerLoggedIn = "";
@@ -47,6 +48,11 @@
                                 END //
                                 
                                 DELIMITER ;";
+    $SQLViewForHotelStatusCount = "CREATE VIEW HotelStatusCounts AS
+                                   SELECT
+                                       (SELECT COUNT(*) FROM employee) AS EmployeesCount,
+                                       (SELECT COUNT(*) FROM customer) AS CustomersCount,
+                                       (SELECT COUNT(*) FROM rooms) AS RoomsCount;";
     function getNewCustID ($conn){
         $newCustID = mt_rand(1000000000, 9999999999);
         $result = $conn->query("SELECT IsCustomerIdTaken('$newCustID') AS isTaken;")->fetch_assoc();
