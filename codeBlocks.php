@@ -270,19 +270,23 @@
         $imageNum = 1;$animationNum = 1;
         $empNo = 1;
         while($emp = $Emp_query_run->fetch_assoc()) {
-            if ($imageNum == 5){
+            if ($imageNum == 7){
                 $imageNum = 1;
             }
             $employees .= '<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
                 <div class="rounded shadow overflow-hidden">
                     <div class="position-relative">
-                        <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">';
+                        <img class="img-fluid" src="img/team-'. $imageNum .'.jpg" alt="">
+                        ';          
             if ($isLoggedIn and $isLoggedInAsEmployee and isset($conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName']) and
                 $conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName'] == 'Manager'){
-                $employees .= '<a id="pen'. $empNo .'" class="edit-icon position-absolute top-0 end-0 p-2">
+                
+                $employees .= ' 
+                            <a id="pen'. $empNo .'" class="edit-icon position-absolute top-0 end-0 p-2">
                             <i class="fas fa-pencil-alt"></i>
                         </a>';
             }
+           
             $employees .= '
                         <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
                             <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -290,10 +294,25 @@
                             <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
-                    <div class="text-center p-4 mt-3">
-                        <h5 class="fw-bold mb-0">' .$emp['FName'] . ' ' . $emp['LName']. '</h5>
+                    <div class="text-center p-4 mt-3" id="Fullname">
+                        <h5 class="fw-bold mb-0"  id="FN'.$empNo.'">' .$emp['FName'] . '</h5>
+                        <h5 class="fw-bold mb-0"  id="LN'.$empNo.'">' .$emp['LName'] . '</h5>
                         </h5>
-                        <small>' . $emp['RoleName'] . '</small>
+                    </div>
+                    <div class="text-center p-4 mt-3">   
+                    <span id="Employeeid'. $empNo .'">'.$emp["EID"].'</span><br>
+                    <span id="RN'. $empNo .'">'.$emp["RoleName"].'</span><br>
+                    <span id="Working_hours'. $empNo .'">'.$emp["WorkingHours"].'</span><br>
+                    <span id="phoneNum'. $empNo .'">'.$emp["Phone"].'</span><br>
+                    <span id="Email'. $empNo .'">'.$emp["Email"].'</span><br>
+                    <span id="SAlary'. $empNo .'">'.$emp["Salary"].'</span><br>
+                    <span id="City'. $empNo .'">'.$emp["City"].'</span>
+                    <span id="Country'. $empNo .'">'.$emp["Country"].'</span> <br>
+                    <span id="State'. $empNo .'">'.$emp["State"].'</span>
+                    <span id="Zip_Code'. $empNo .'">'.$emp["ZipCode"].'</span>
+                    <span id="service-ID'. $empNo .'">'.$emp["ServiceID"].'</span><br>
+                    <span id="restaurant-ID'. $empNo .'">'.$emp["RestaurantID"].'</span>
+                       
                     </div>
                 </div>
             </div>';
@@ -303,4 +322,7 @@
         }
         $empNo--;
     }
+   
+    
+   
 ?>
