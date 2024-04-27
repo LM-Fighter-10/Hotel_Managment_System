@@ -1,0 +1,65 @@
+INSERT INTO Customer (CustomerID, FirstName, LastName, Gender, Email, PhoneNumber, ContactNumber, Country, City, State, Zip_Code) VALUES
+('CUST1234567890', 'John', 'Doe', 'Male', 'john.doe@example.com', '123-456-7890', '123-456-7890', 'USA', 'New York', 'NY', '10001'),
+('CUST9876543210', 'Jane', 'Smith', 'Female', 'jane.smith@example.com', '987-654-3210', '987-654-3210', 'USA', 'Los Angeles', 'CA', '90001'),
+('CUST4567890123', 'Michael', 'Johnson', 'Male', 'michael.johnson@example.com', '234-567-8901', '234-567-8901', 'USA', 'Chicago', 'IL', '60601');
+
+INSERT INTO Hotel (BranchID, Name, Description, Rating, City, Country, StreetNum, PriceRange, ContactNumber) VALUES
+('HOT123', 'Hotel California', 'A lovely hotel with a beachfront view.', 4.5, 'Los Angeles', 'USA', '123', 'Moderate', '123-456-7890'),
+('HOT456', 'Grand Hotel', 'Luxury hotel with exquisite amenities.', 5.0, 'New York', 'USA', '456', 'Expensive', '987-654-3210');
+
+INSERT INTO Rooms (RoomNum, Capacity, Status, Price_Per_Night, BranchID) VALUES
+(101, 'Single', 'Available', 100.00, 'HOT123'),
+(102, 'Double', 'Available', 150.00, 'HOT123'),
+(103, 'Suite', 'Available', 250.00, 'HOT456');
+
+INSERT INTO Services (SID, Name, isExternal, OperatingHours, Location, PriceRange, ContactNumber, BranchID) VALUES
+('SER123', 'Spa & Fitness', b'0', '9:00 AM - 8:00 PM', 'Ground Floor', 'Expensive', '+2345678901', 'HOT123'),
+('SER456', 'Food & Restaurant', b'0', '10:00 AM - 9:00 PM', 'Main Dining Area', 'Expensive', '+1234567890', 'HOT456'),
+('SER789', 'Rooms & Apartment', b'0', '8:00 AM - 11:00 PM', 'Suite 101', 'Moderate', '+9876543210', 'HOT123'),
+('SER101', 'Sports & Gaming', b'0', '9:00 AM - 10:00 PM', 'Indoor Sports Complex', 'Affordable', '+2468013579', 'HOT456'),
+('SER111', 'Event & Party', b'0', '6:00 PM - 2:00 AM', 'Grand Ballroom', 'Expensive', '+1122334455', 'HOT123'),
+('SER222', 'GYM & Yoga', b'0', '5:00 AM - 10:00 PM', 'Fitness Center', 'Moderate', '+9988776655', 'HOT456');
+
+INSERT INTO Restaurant (RID, Name, isExternal, OperatingHours, Location, PriceRange, ContactNumber, BranchID) VALUES
+('RES12345', 'Seafood Palace', 0, '10:00 AM - 10:00 PM', '123 Main Street', 'Moderate', '123-456-7890', 'HOT123'),
+('RES78901', 'Café Bistro', 1, '8:00 AM - 8:00 PM', '456 Elm Street', 'Affordable', '987-654-3210', 'HOT456');
+
+INSERT INTO Employee (EID, FName, LName, RoleName, WorkingHours, Phone, Email, Salary, City, State, ZipCode, Country, Gender, ServiceID, RestaurantID) VALUES
+('EMP1234567890', 'Michael', 'Johnson', 'Manager', 40, '234-567-8901', 'michael.johnson@example.com', 5000, 'Chicago', 'IL', '60601', 'USA', 'Male', 'SER123', 'RES12345');
+INSERT INTO Employee (EID, FName, LName, RoleName, WorkingHours, Phone, Email, Salary, City, State, ZipCode, Country, Gender, ServiceID, RestaurantID) VALUES
+('EMP7890123456', 'Emily', 'Brown', 'Waiter', 35, '890-123-4567', 'emily.brown@example.com', 3000, 'Houston', 'TX', '77001', 'USA', 'Female', 'SER456', 'RES12345'),
+('EMP2345678901', 'David', 'Martinez', 'Chef', 40, '345-678-9012', 'david.martinez@example.com', 6000, 'Miami', 'FL', '33101', 'USA', 'Male', 'SER123', 'RES78901');
+
+INSERT INTO Food_Plan (ID, Type, Main_Dish, Side_Dish, Desert_Dish) VALUES
+('FP123', 'Breakfast', 'Eggs and Bacon', 'Toast', 'Fruit Salad'),
+('FP456', 'Lunch', 'Grilled Chicken', 'Steamed Vegetables', 'Chocolate Cake'),
+('FP789', 'Dinner', 'Salmon Fillet', 'Mashed Potatoes', 'Cheesecake');
+
+INSERT INTO Category (Category, RoomNum) VALUES
+('Deluxe', 101),
+('Standard', 102),
+('Suite', 103);
+
+INSERT INTO Invoice (Inv_ID, Description) VALUES
+('INV12345', 'Room charges for the stay'),
+('INV67890', 'Additional services and amenities');
+
+INSERT INTO Book (CustomerID, RoomNum, Inv_ID, CheckInDate, CheckOutDate, BookingType, Price) VALUES
+('CUST1234567890', 101, 'INV12345', '2024-04-21', '2024-04-24', 'Standard', 300.00),
+('CUST9876543210', 102, 'INV12345', '2024-04-22', '2024-04-25', 'Standard', 450.00),
+('CUST4567890123', 103, 'INV67890', '2024-04-23', '2024-04-26', 'Standard', 750.00);
+
+INSERT INTO Accompanies (Name, CustomerID, RoomNum, Gender, Bdate, Relationship) VALUES
+('John Doe', 'CUST1234567890', 101, 'Male', '1990-01-01', 'Friend'),
+('Jane Smith', 'CUST9876543210', 102, 'Female', '1992-05-15', 'Spouse'),
+('Michael Johnson', 'CUST4567890123', 103, 'Male', '1985-11-20', 'Family');
+
+INSERT INTO Choose (CustomerNo, ServiceID) VALUES
+('CUST1234567890', 'SER123'),
+('CUST1234567890', 'SER456'),
+('CUST9876543210', 'SER123');
+
+INSERT INTO Offers (RestaurantID, FoodPlanID) VALUES
+('RES12345', 'FP123'),
+('RES78901', 'FP456'),
+('RES78901', 'FP789');

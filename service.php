@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
     include 'codeBlocks.php';
+    refreshServices();
 ?>
 <head>
     <?=$headerBlock?>
@@ -73,104 +74,20 @@
         </div>
         <!-- Booking End -->
 
-
         <!-- Service Start -->
-        <div class="container-xxl py-5">
+        <div class="container-xxl py-5" style="margin-bottom: 200px">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Services</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Services</span></h1>
                 </div>
                 <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-hotel fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Rooms & Appartment</h5>
-                            <p class="text-body mb-0">Our rooms offer comfort and style—sanctuaries where you can sink into plush bedding, enjoy panoramic views, and experience personalized service. Whether a cozy single room or spacious suite, tranquility awaits.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-utensils fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Food & Restaurant</h5>
-                            <p class="text-body mb-0">From gourmet restaurants to cozy cafes, our culinary team crafts dishes celebrating local flavors. Savor farm-to-table ingredients, fine wines, and impeccable service. Romantic dinners or casual brunches create lasting memories.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-spa fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Spa & Fitness</h5>
-                            <p class="text-body mb-0">Step into our spa, leave the world behind. Rejuvenating treatments—from soothing massages to invigorating facials—await. Unwind in the sauna, pool, or yoga class. Our state-of-the-art gym balances mind, body, and soul.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-swimmer fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Sports & Gaming</h5>
-                            <p class="text-body mb-0">Sports enthusiasts, rejoice! Hit the tennis court, practice golf, or dive into the pool. For gaming fans, our arcade and casino await. Compete or have fun—our facilities cater to all ages.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-glass-cheers fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Event & Party</h5>
-                            <p class="text-body mb-0"> Versatile event spaces—from weddings to corporate gatherings—are elegantly tailored to your vision. Our experienced team ensures seamless execution, creating unforgettable moments.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-dumbbell fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">GYM & Yoga</h5>
-                            <p class="text-body mb-0">Our fitness center is a lifestyle, not just equipment. Early risers hit the treadmill, yoga enthusiasts find solace in our serene studio. Whether seasoned or a beginner, our gym fosters well-being. Breathe, stretch, find balance.</p>
-                        </a>
-                    </div>
+                    <?=$services?>
                 </div>
             </div>
         </div>
         <!-- Service End -->
 
-
-        <!-- Newsletter Start -->
-        <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 border rounded p-1">
-                    <div class="border rounded text-center p-1">
-                        <div class="bg-white rounded text-center p-5">
-                            <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
-                            <div class="position-relative mx-auto" style="max-width: 400px;">
-                                <input class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
-                                <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Newsletter Start -->
         <?=$footerBlock?>
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

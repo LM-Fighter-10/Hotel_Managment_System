@@ -7,18 +7,17 @@
         $rolename = $_REQUEST['rolename'];
         $workinghours = $_REQUEST['workinghours'];
         $phone = $_REQUEST['phone'];
-        $Email_address = $_REQUEST['Email_address'];
+        $Email_address = $_REQUEST['email'];
         $salary = $_REQUEST['salary'];
         $city = $_REQUEST['city'];
         $state =$_REQUEST['state'];
         $country = $_REQUEST['country'];
         $zipcode = $_REQUEST['zipcode'];
-        $serviceid = $_REQUEST['serviceid'];
-        $restaurantid = $_REQUEST['restaurantid'];
+        $serviceid = $_REQUEST['serviceID'];
+        $restaurantid = $_REQUEST['restaurantID'];
         
         
         $conn->query("UPDATE `employee` SET 
-                --    `EID` = $employeeNumber, 
                    `FName`='$fname',
                    `LName`='$lname',
                    `RoleName`='$rolename', 
@@ -30,8 +29,8 @@
                     `State` ='$state',
                     `Country` = '$country',
                     `ZipCode` = '$zipcode',
-                   `ServiceID`' = '$ServiceID',
-                   `RestaurantID` = '$RestaurantID',
+                   `ServiceID` = '$serviceid',
+                   `RestaurantID` = '$restaurantid'
                    WHERE EID='$employeeNumber'");
         refreshEmployees();
         $response = array('success' => true, 'employee' => $employees);

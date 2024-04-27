@@ -223,7 +223,7 @@
 }
 
 .service-item .service-icon {
-    margin: 0 auto 30px auto;
+    margin: 30px auto 30px auto;
     width: 65px;
     height: 65px;
     transition: .5s;

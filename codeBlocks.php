@@ -76,7 +76,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -89,6 +89,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="fontawesome-free-6.5.2-web/css/all.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">';
@@ -160,13 +161,13 @@
         global $conn, $rooms, $SelectingRoomStatus, $isLoggedIn, $isLoggedInAsEmployee, $roomInd;
         $resultStatus =$conn->query($SelectingRoomStatus);
         $rooms = "";
-        $roomInd = 1;$animationNum = 1;
+        $roomInd = 1;
         while($room =$resultStatus->fetch_assoc()){
             if ($roomInd == 4){
                 $roomInd = 1;
             }
             $rooms = $rooms.
-                '<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.'. $animationNum .'s">
+                '<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.'. $roomInd .'s">
                     <div class="room-item shadow rounded overflow-hidden">
                         <div class="position-relative">
                             <img class="img-fluid" src="img/room-'. $roomInd .'.jpg" alt="">
@@ -259,7 +260,6 @@
                 </div>';
             }
             $roomInd++;
-            $animationNum++;
         }
         $roomInd--;
     }
@@ -299,13 +299,13 @@
                         <h5 class="fw-bold mb-0"  id="LN'.$empNo.'">' .$emp['LName'] . '</h5>
                         </h5>
                     </div>
-                    <div class="text-center p-4 mt-3">   
+                    <div class="text-center p-4 mt-3 d-none">   
                     <span id="Employeeid'. $empNo .'">'.$emp["EID"].'</span><br>
                     <span id="RN'. $empNo .'">'.$emp["RoleName"].'</span><br>
                     <span id="Working_hours'. $empNo .'">'.$emp["WorkingHours"].'</span><br>
                     <span id="phoneNum'. $empNo .'">'.$emp["Phone"].'</span><br>
                     <span id="Email'. $empNo .'">'.$emp["Email"].'</span><br>
-                    <span id="SAlary'. $empNo .'">'.$emp["Salary"].'</span><br>
+                    <span id="Salary'. $empNo .'">'.$emp["Salary"].'</span><br>
                     <span id="City'. $empNo .'">'.$emp["City"].'</span>
                     <span id="Country'. $empNo .'">'.$emp["Country"].'</span> <br>
                     <span id="State'. $empNo .'">'.$emp["State"].'</span>
@@ -322,7 +322,51 @@
         }
         $empNo--;
     }
-   
-    
+
+    function refreshServices(){
+        global $conn, $services, $SelectingAllServices, $isLoggedIn, $isLoggedInAsEmployee, $serviceInd;
+        $resultServices =$conn->query($SelectingAllServices);
+        $services = "";
+        $serviceInd = 1;
+        $icons = array("fa-futbol", "fa-birthday-cake", "fa-spa", "fa-dumbbell", "fa-utensils", "fa-hotel");
+        while($service =$resultServices->fetch_assoc()){
+            if ($serviceInd == 7){
+                $serviceInd = 1;
+            }
+            $services .=
+                '<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.'. $serviceInd .'s">
+                        <div class="service-item rounded user-select-none">
+                            <div class="service-icon bg-transparent border rounded p-1">
+                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
+                                    <i class="fa '. $icons[$serviceInd-1] .' fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <h5 class="mb-3">'. $service['Name'] .'</h5><div class="d-flex justify-content-around m-2">';
+            if ($service['isExternal'] == 1){
+                $services .= '<span> <i class="fa-solid fa-square-up-right p-1 fa-lg" style="color: #fea116;"></i>
+                                <span style="padding-left: 0.4rem">External</span>';
+            }else{
+                $services .= '<span> <i class="fa-solid fa-square-up-right p-1 fa-lg fa-rotate-180" 
+                                style="color: #fea116;"></i><span style="padding-left: 0.4rem">Internal</span>';
+            }
+            $services .=        '</span><span><i class="fa-solid fa-code-branch fa-lg p-1" style="color: #fea116;"></i>
+                                <span>'. $service['BranchID'] .'</span></span>
+                                </div>
+                                <span class="m-2"><i class="fa-solid fa-business-time p-1 fa-lg" style="color: #fea116;"></i>
+                                <span class="m-2">'. $service['OperatingHours'] .'</span></span>
+                                <span class="m-2"><i class="fa-solid fa-location-crosshairs fa-lg p-1" style="color: #fea116;"></i>
+                                <span class="m-2">'. $service['Location'] .'</span></span>
+                                <div class="d-flex justify-content-around m-2">
+                                    <span><i class="fa-solid fa-phone fa-lg p-1" style="color: #fea116;"></i>
+                                    <span>'. $service['ContactNumber'] .'</span></span>
+                                    <span><i class="fa-solid fa-money-bill p-1" style="color: #fea116;"></i>
+                                    <span>'. $service['PriceRange'] .'</span></span>
+                                </div>
+                            </div>
+                        </div>';
+            $serviceInd++;
+        }
+        $serviceInd--;
+    }
    
 ?>

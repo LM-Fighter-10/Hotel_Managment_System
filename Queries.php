@@ -3,6 +3,7 @@
     $SelectingRoomStatus ="SELECT * FROM `rooms` as r JOIN `hotel` as h ON r.BranchID=h.BranchID";
     $NumberOfRoom ="SELECT COUNT(*) as count FROM `rooms`";
     $SelectingAllEmployeeFullName = "SELECT * FROM Employee";
+    $SelectingAllServices = "SELECT * FROM Services";
     $GetEmployeeLoggedIn = "";
     $GetCustomerLoggedIn = "";
     $AddCustomer = "";
@@ -48,6 +49,42 @@
                                 END //
                                 
                                 DELIMITER ;";
+
+    $SQLFunction_isRestaurantExist = "DELIMITER //
+                                      CREATE FUNCTION isRestaurantExist(
+                                          p_RestaurantID CHAR(8)
+                                      )
+                                      RETURNS BIT
+                                      BEGIN
+                                          DECLARE countExist INT;
+                                      
+                                          SELECT COUNT(*) INTO countExist FROM Restaurant WHERE RID = p_RestaurantID;
+                                      
+                                          IF countExist > 0 THEN
+                                              RETURN 1;
+                                          ELSE
+                                              RETURN 0;
+                                          END IF;
+                                      END //
+                                      DELIMITER ;";
+
+    $SQLFunction_isServiceExist = "DELIMITER //
+                                   CREATE FUNCTION isServiceExist(
+                                       p_ServiceID CHAR(8)
+                                   )
+                                   RETURNS BIT
+                                   BEGIN
+                                       DECLARE countExist INT;
+                                   
+                                       SELECT COUNT(*) INTO countExist FROM services WHERE SID = p_ServiceID;
+                                   
+                                       IF countExist > 0 THEN
+                                           RETURN 1;
+                                       ELSE
+                                           RETURN 0;
+                                       END IF;
+                                   END //
+                                   DELIMITER ;";
     $SQLViewForHotelStatusCount = "CREATE VIEW HotelStatusCounts AS
                                    SELECT
                                        (SELECT COUNT(*) FROM employee) AS EmployeesCount,
@@ -62,4 +99,19 @@
         }
         return "CUST".$newCustID;
     }
+    function isServiceExist ($conn, $sid){
+        $result = $conn->query("SELECT isServiceExist('$sid') AS isExist;")->fetch_assoc();
+        if ($result['isExist'] == 1){
+            return true;
+        }
+        return false;
+    }
+    function isRestaurantExist ($conn, $rid){
+        $result = $conn->query("SELECT isRestaurantExist('$rid') AS isExist;")->fetch_assoc();
+        if ($result['isExist'] == 1){
+            return true;
+        }
+        return false;
+    }
+
 ?>
