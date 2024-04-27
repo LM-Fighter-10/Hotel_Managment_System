@@ -510,6 +510,7 @@
     border-right: none;
 }
 
+
 /*-----Login-Register Styles-----*/
 .login-body{
     display: flex;
@@ -931,6 +932,38 @@
   color: #fff;
   font-size: 16px;
   transform: 0.3s ease;
+}
+
+.remove-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    margin-right: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    height: 100%;
+}
+
+.remove-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+.add-button {
+    background-color: #158f5b;
+    color: white;
+    border: none;
+    margin-right: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    height: 100%;
+}
+
+.add-button:hover {
+    background-color: #0b4930; /* Darker red on hover */
 }
 
 .signUp-submit:hover {
