@@ -75,7 +75,7 @@
 
 
         <!-- Booking Start -->
-        <div class="container-xxl py-5">
+        <div class="container-xxl py-5" style="margin-bottom: 200px">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Room Booking</h6>
@@ -171,56 +171,9 @@
                                             <label for="checkout">Check Out</label>
                                         </div>
                                     </div>
-<!--                                    <div class="col-md-12">-->
-<!--                                        <div class="form-floating">-->
-<!--                                            <select class="form-select" id="select2" name="room">-->
-<!--                                                <option value="Single">Single</option>-->
-<!--                                                <option value="Double">Double</option>-->
-<!--                                                <option value="Suite">Suite</option>-->
-<!--                                            </select>-->
-<!--                                            <label for="select2">Select Gender</label>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+
                                     <div id="xx">
                                     </div>
-
-<!--                                    <div class="col-md-6">-->
-<!--                                        <div class="form-floating">-->
-<!--                                            <select class="form-select" id="select1">-->
-<!--                                              <option value="1">Adult 1</option>-->
-<!--                                              <option value="2">Adult 2</option>-->
-<!--                                              <option value="3">Adult 3</option>-->
-<!--                                            </select>-->
-<!--                                            <label for="select1">Select Adult</label>-->
-<!--                                          </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <div class="form-floating">-->
-<!--                                            <select class="form-select" id="select2">-->
-<!--                                              <option value="1">1</option>-->
-<!--                                              <option value="2">2</option>-->
-<!--                                              <option value="3">3</option>-->
-<!--                                              <option value="3">4</option>-->
-<!--                                              <option value="3">5</option>-->
-<!--                                              <option value="3">6</option>-->
-<!--                                              <option value="3">7</option>-->
-<!--                                              <option value="3">8</option>-->
-<!--                                            </select>-->
-<!--                                            <label for="select2">Select Number of Accompanies</label>-->
-<!--                                          </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-12">-->
-<!--                                        <div class="form-floating">-->
-<!--                                            <select class="form-select" id="select3">-->
-<!--                                              <option value="1">1</option>-->
-<!--                                              <option value="2">2</option>-->
-<!--                                              <option value="3">3</option>-->
-<!--                                              <option value="3">4</option>-->
-<!--                                              <option value="3">5</option>-->
-<!--                                            </select>-->
-<!--                                            <label for="select3">Select Number of Rooms</label>-->
-<!--                                          </div>-->
-<!--                                    </div>-->
 
                                     <div class="col-12">
                                         <div class="form-floating">
@@ -243,24 +196,6 @@
         </div>
         <!-- Booking End -->
 
-
-        <!-- Newsletter Start -->
-        <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 border rounded p-1">
-                    <div class="border rounded text-center p-1">
-                        <div class="bg-white rounded text-center p-5">
-                            <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
-                            <div class="position-relative mx-auto" style="max-width: 400px;">
-                                <input class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
-                                <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Newsletter Start -->
         <?=$footerBlock?>
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

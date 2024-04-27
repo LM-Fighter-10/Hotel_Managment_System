@@ -215,6 +215,10 @@
                     $response['serviceId_error'] = true;
                     $response['serviceId_errorMsg'] = "Services id does not exist";
                 }
+                if (strlen($serviceId) > 6 || strlen($serviceId) < 6) {
+                    $response['serviceId_error'] = true;
+                    $response['serviceId_errorMsg'] = "Services id must be 6 characters long";
+                }
             } else {
                 // Handle empty email
                 $response['serviceId_error'] = true;
@@ -228,6 +232,10 @@
                 if (!isRestaurantExist($conn, $restId)) {
                     $response['restaurantId_error'] = true;
                     $response['restaurantId_errorMsg'] = "Restaurant id does not exist";
+                }
+                if (strlen($restId) > 8 || strlen($restId) < 8) {
+                    $response['restaurantId_error'] = true;
+                    $response['restaurantId_errorMsg'] = "Restaurant id must be 8 characters long";
                 }
             } else {
                 // Handle empty email

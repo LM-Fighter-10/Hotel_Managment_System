@@ -4,6 +4,7 @@
     include 'codeBlocks.php';
     refreshRooms();
     refreshEmployees();
+    refreshServices();
     $result = $conn->query("SELECT * FROM HotelStatusCounts");
     while ($row = $result->fetch_assoc()) {
         $roomCount = $row['RoomsCount'];
@@ -167,15 +168,57 @@
         </div>
         <!-- About End -->
 
+        <div id="backgroundCover" class="background-cover"></div>
+        <!-- Page Header End -->
+        <form class="roomEditForm" id="RoomEditForm" method="POST">
+            <div class="d-flex justify-content-between user-select-none">
+                <p class="roomEditTitle">EDIT ROOM</p>
+                <p class="crossExitEdit" id="exitEdit1">✖</p>
+            </div>
+            <div id="EditErrorMsg1" class="alert alert-danger" role="alert"></div>
+            <label for="roomNumber" id="roomNumberMainLabel">
+                <input class="input" type="text" id="roomNumber" name="roomNumber" readonly>
+                <span id="roomNumberLabel">Room number</span>
+            </label>
+
+            <div class="roomEditFlex">
+                <label for="branchId" style="width: 200px;">
+                    <input class="input" type="text" id="branchId" name="branchId" required>
+                    <span id="branchIdLabel">Branch ID</span>
+                </label>
+
+                <label for="pricePerNight" style="width: 200px;">
+                    <input class="input" type="text" id="pricePerNight" name="pricePerNight" required>
+                    <span id="pricePerNightLabel">Price / Night</span>
+                </label>
+            </div>
+
+            <label for="roomCapacity">Room Capacity:</label>
+            <select class="dropdownEditRoom" id="roomCapacity" name="capacity">
+                <option value="Single" selected>Single</option>
+                <option value="Double">Double</option>
+                <option value="Triple">Triple</option>
+                <option value="Suite">Suite</option>
+            </select>
+
+            <label for="status">Status:</label>
+            <select class="dropdownEditRoom" id="status" name="status">
+                <option value="Available" selected>Available</option>
+                <option value="Occupied">Occupied</option>
+                <option value="Under Maintenance">Under Maintenance</option>
+            </select>
+
+            <input type="button" class="roomEditSubmit" id="roomEditSubmitBtn" value="Edit Room">
+        </form>
 
         <!-- Room Start -->
-        <div class="container-xxl py-5">
+        <div class="container-xxl py-5" style="margin-bottom: 200px;">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
                 </div>
-                <div class="row g-4">
+                <div class="row g-4 position-relative" id="roomsContainer">
                     <?=$rooms?>
                 </div>
             </div>
@@ -226,93 +269,125 @@
 
 
         <!-- Service Start -->
-        <div class="container-xxl py-5">
+        <div class="container-xxl py-5" style="margin-bottom: 200px">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Services</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Services</span></h1>
                 </div>
                 <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-hotel fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Rooms & Appartment</h5>
-                            <p class="text-body mb-0">Our rooms offer comfort and style—sanctuaries where you can sink into plush bedding, enjoy panoramic views, and experience personalized service. Whether a cozy single room or spacious suite, tranquility awaits.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-utensils fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Food & Restaurant</h5>
-                            <p class="text-body mb-0">From gourmet restaurants to cozy cafes, our culinary team crafts dishes celebrating local flavors. Savor farm-to-table ingredients, fine wines, and impeccable service. Romantic dinners or casual brunches create lasting memories.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-spa fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Spa & Fitness</h5>
-                            <p class="text-body mb-0">Step into our spa, leave the world behind. Rejuvenating treatments—from soothing massages to invigorating facials—await. Unwind in the sauna, pool, or yoga class. Our state-of-the-art gym balances mind, body, and soul.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-swimmer fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Sports & Gaming</h5>
-                            <p class="text-body mb-0">Sports enthusiasts, rejoice! Hit the tennis court, practice golf, or dive into the pool. For gaming fans, our arcade and casino await. Compete or have fun—our facilities cater to all ages..</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-glass-cheers fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">Event & Party</h5>
-                            <p class="text-body mb-0"> Versatile event spaces—from weddings to corporate gatherings—are elegantly tailored to your vision. Our experienced team ensures seamless execution, creating unforgettable moments.</p>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <a class="service-item rounded" href="">
-                            <div class="service-icon bg-transparent border rounded p-1">
-                                <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                    <i class="fa fa-dumbbell fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                            <h5 class="mb-3">GYM & Yoga</h5>
-                            <p class="text-body mb-0">Our fitness center is a lifestyle, not just equipment. Early risers hit the treadmill, yoga enthusiasts find solace in our serene studio. Whether seasoned or a beginner, our gym fosters well-being. Breathe, stretch, find balance.</p>
-                        </a>
-                    </div>
+                    <?=$services?>
                 </div>
             </div>
         </div>
         <!-- Service End -->
 
+        <div id="backgroundCover2" class="background-cover"></div>
+        <!-- Page Header End -->
+        <form class="employeeEditForm" id="EmployeeEditForm" method="POST">
+            <div class="d-flex justify-content-between user-select-none">
+                <p class="employeeEditTitle">EDIT Employee details</p>
+              <p class="crossExitEdit" id="exitEdit2">✖</p>
+            </div>
+            <div id="EditErrorMsg2" class="alert alert-danger" role="alert"></div>
+            <label for="employeeNumber" id="EmployeeIDMainLabel">
+                <input class="input" type="text" id="employeeNumber" name="employeeNumber" readonly>
+                <span id="EmployeeIDLabel">Employee Number</span>
+            </label>
+
+            <div class="employeeEditFlex">
+                <label for="fname" style="width: 200px;" >
+                    <input class="input" type="text" id="fname" name="fname" required>
+                    <span id="FnameLabel">First Name</span>
+
+                </label>
+
+                <label for="lname" style="width: 200px;">
+                    <input class="input" type="text" id="lname" name="lname" required>
+                    <span id="lnameLabel">Last Name</span>
+                </label>
+            </div>
+
+
+                <div>
+                <label for="rolename" style="width: 200px;" >
+                    <input class="input" type="text" id="rolename" name="rolename" required>
+                    <span id = "RolenameLabel">Role Name</span>
+                </label>
+                <label for="workinghours" style="width: 200px;" >
+                    <input class="input" type="text" id="workinghours" name="workinghours" required>
+                    <span id="workinghlabel">Working Hours</span>
+                </label>
+
+                </div>
+
+
+               <div>
+                <label for="phone" style="width: 200px;">
+                    <input class="input" type="text" id="phone" name="phone" required>
+                    <span id ="phonelabel">Phone</span>
+                </label>
+
+                <label for="salary" style="width: 200px;">
+                    <input class="input" type="text" id="salary" name="salary" required>
+                    <span id = "salarylabel">Salary</span>
+                </label>
+
+
+                </div>
+                <div>
+                <label for="email" style="width: 405px;">
+                    <input class="input" type="text" id="email" name="email" required>
+                    <span id = "emaillabel">Email</span>
+                </label>
+                </div>
+
+                <div>
+                <label for="country" style="width: 200px;">
+                    <input class="input" type="text" id="country" name="country" required>
+                    <span id="countrylabel">Country</span>
+                </label>
+                <label for="city" style="width: 200px;">
+                    <input class="input" type="text" id="city" name="city" required>
+                    <span id ="citylabel" >City</span>
+                </label>
+                </div>
+
+                <div>
+                <label for="state" style="width: 200px;">
+                    <input class="input" type="text" id="state" name="state" required>
+                    <span id = "statelabel">State</span>
+                </label>
+
+                <label for="zipcode" style="width: 200px;">
+                    <input class="input" type="text" id="zipcode" name="zipcode" required>
+                    <span id = "zipcodelabel">Zip Code</span>
+                </label>
+                </div>
+
+
+                <div>
+                <label for="serviceID" style="width: 200px;">
+                    <input class="input" type="text" id="serviceID" name="serviceID" required>
+                    <span id = "sidlabel">Service ID</span>
+                </label>
+                <label for="restaurantID" style="width: 200px;">
+                    <input class="input" type="text" id="restaurantID" name="restaurantID" required>
+                    <span id = "ridlabel">Restaurant ID</span>
+                </label>
+
+                </div>
+            <input type="button" class="EmployeeEditSubmit" id="EmployeeEditSubmitBtn" value="Edit Employee">
+        </form>
 
         <!-- Team Start -->
-        <div class="container-xxl py-5" style="margin-bottom: 200px;">
+        <div class="container-xxl py-5" style="margin-bottom: 200px">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
                     <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
                 </div>
-                <div class="row g-4 justify-content-center">
+                <div class="row g-4 justify-content-center" id="employeesContainer">
                     <?=$employees?>
                 </div>
             </div>
@@ -333,6 +408,9 @@
         alert("<?=$error?>");
     }
 </script>
+
+<?=editRoom()?>
+<?=editEmployee()?>
 
 </html>
 

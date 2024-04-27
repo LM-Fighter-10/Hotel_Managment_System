@@ -3,6 +3,12 @@
 <?php
     include 'codeBlocks.php';
     refreshEmployees();
+    $result = $conn->query("SELECT * FROM HotelStatusCounts");
+    while ($row = $result->fetch_assoc()) {
+        $roomCount = $row['RoomsCount'];
+        $employeeCount = $row['EmployeesCount'];
+        $customerCount = $row['CustomersCount'];
+    }
 ?>
 <head>
     <?=$headerBlock?>
@@ -88,26 +94,26 @@
                                 <div class="border rounded p-1">
                                     <div class="border rounded text-center p-4">
                                         <i class="fa fa-hotel fa-2x text-primary mb-2"></i>
-                                        <h2 class="mb-1" data-toggle="counter-up">1234</h2>
+                                        <h2 class="mb-1" data-toggle="counter-up"><?=$roomCount?></h2>
                                         <p class="mb-0">Rooms</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 wow fadeIn" data-wow-delay="0.2s">
+                                <div class="border rounded p-1">
+                                    <div class="border rounded text-center p-4">
+                                        <i class="fa fa-users-cog fa-2x text-primary mb-2"></i>
+                                        <h2 class="mb-1" data-toggle="counter-up"><?=$employeeCount?></h2>
+                                        <p class="mb-0">Employees</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4 wow fadeIn" data-wow-delay="0.3s">
                                 <div class="border rounded p-1">
                                     <div class="border rounded text-center p-4">
-                                        <i class="fa fa-users-cog fa-2x text-primary mb-2"></i>
-                                        <h2 class="mb-1" data-toggle="counter-up">1234</h2>
-                                        <p class="mb-0">Staffs</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 wow fadeIn" data-wow-delay="0.5s">
-                                <div class="border rounded p-1">
-                                    <div class="border rounded text-center p-4">
                                         <i class="fa fa-users fa-2x text-primary mb-2"></i>
-                                        <h2 class="mb-1" data-toggle="counter-up">1234</h2>
-                                        <p class="mb-0">Clients</p>
+                                        <h2 class="mb-1" data-toggle="counter-up"><?=$customerCount?></h2>
+                                        <p class="mb-0">Customers</p>
                                     </div>
                                 </div>
                             </div>
