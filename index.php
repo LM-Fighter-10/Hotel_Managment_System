@@ -5,12 +5,7 @@
     refreshRooms();
     refreshEmployees();
     refreshServices();
-    $result = $conn->query("SELECT * FROM HotelStatusCounts");
-    while ($row = $result->fetch_assoc()) {
-        $roomCount = $row['RoomsCount'];
-        $employeeCount = $row['EmployeesCount'];
-        $customerCount = $row['CustomersCount'];
-    }
+    getRoom_Emp_Cust_Count();
 ?>
 <head>
     <?=$headerBlock?>

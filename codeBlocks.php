@@ -1,6 +1,8 @@
 <?php
     include_once "connect.php";
     include 'Queries.php';
+    $branches = refreshBranches();
+    $info = getBranchInfo(reset($branches)['BranchID']);
     $navBarBlock = '
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -22,12 +24,13 @@
                 <div class="row gx-0 bg-white d-none d-lg-flex header-contact-container">
                     <div class="col-lg-7 px-5 text-start header-contact-email-phone">
                         <div class="h-100 d-inline-flex align-items-center py-2 me-4">
-                            <i class="fa fa-envelope text-primary me-2"></i>
-                            <p class="mb-0">hotelier997@gmail.com</p>
+                            <p class="mb-0"><i class="fa-solid fa-signature fa-lg me-1" style="color: #FEA116"></i>
+                                    <span id="BR-Name">'.$info['Name'].'</span>
+                                </p>
                         </div>
                         <div class="h-100 d-inline-flex align-items-center py-2">
-                            <i class="fa fa-phone-alt text-primary me-2"></i>
-                            <p class="mb-0">+012 345 6789</p>
+                            <p class="mb-0"><i class="fa fa-phone-alt text-primary me-2"></i>
+                            <span id="BR-PhNumber"> '.$info["ContactNumber"].'</span></p>
                         </div>
                     </div>
                 </div>
@@ -157,7 +160,7 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>';
 
-    function refreshRooms(){
+    function refreshRooms() {
         global $conn, $rooms, $SelectingRoomStatus, $isLoggedIn, $isLoggedInAsEmployee, $roomInd;
         $resultStatus =$conn->query($SelectingRoomStatus);
         $rooms = "";
@@ -264,7 +267,7 @@
         $roomInd--;
     }
 
-    function refreshEmployees(){
+    function refreshEmployees() {
         global $conn, $employees, $SelectingAllEmployeeFullName, $isLoggedIn, $GetEmployeeLoggedIn, $isLoggedInAsEmployee, $empNo;
         $Emp_query_run = $conn->query($SelectingAllEmployeeFullName);
         $employees = "";
@@ -324,7 +327,7 @@
         $empNo--;
     }
 
-    function refreshServices(){
+    function refreshServices() {
         global $conn, $services, $SelectingAllServices, $serviceInd;
         $resultServices =$conn->query($SelectingAllServices);
         $services = "";
@@ -370,8 +373,23 @@
         $serviceInd--;
     }
 
-    function editRoom()
-    {
+    function refreshBranches() {
+        global $conn;
+        $result = $conn->query("SELECT BranchID, Name FROM Hotel");
+        if ($result->num_rows > 0) {
+            $branches = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
+        return $branches;
+    }
+
+    function getBranchInfo($BranchID) {
+        global $conn;
+        $query = "SELECT StreetNum,City, Country, ContactNumber, Name FROM Hotel WHERE BranchID = '$BranchID'";
+        $result = $conn->query($query);
+        return (mysqli_fetch_assoc($result));
+    }
+
+    function editRoom() {
         global $roomInd;
         return "<script>
     const roomEditForm = document.getElementById('RoomEditForm');
@@ -521,8 +539,7 @@
     </script>";
     }
 
-    function editEmployee()
-    {
+    function editEmployee() {
         global $empNo;
        return "<script>
 
@@ -939,5 +956,15 @@
         }
     }
     </script>";
+    }
+
+    function getRoom_Emp_Cust_Count() {
+        global $conn, $roomCount, $employeeCount, $customerCount;
+        $result = $conn->query("SELECT * FROM HotelStatusCounts");
+        while ($row = $result->fetch_assoc()) {
+            $roomCount = $row['RoomsCount'];
+            $employeeCount = $row['EmployeesCount'];
+            $customerCount = $row['CustomersCount'];
+        }
     }
 ?>
