@@ -368,23 +368,25 @@ include 'codeBlocks.php';
 // Step 3: Insert data into MySQL when form is submitted
 if (isset($_POST['submit'])) {
 
+
+
     $unique_id = mt_rand(1000000000, 9999999999);
     $result = $conn->query("select * from customer where CustomerID = $unique_id");
-    while ($result->num_rows > 0){
+    while ($result->num_rows > 0) {
         $unique_id = mt_rand(1000000000, 9999999999);
         $result = $conn->query("select * from customer where CustomerID = $unique_id");
     }
 
-    $unique_id = "CUST".$unique_id;
+    $unique_id = "CUST" . $unique_id;
 
     $unique_id1 = mt_rand(10000, 99999);
     $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
-    while ($result->num_rows > 0){
+    while ($result->num_rows > 0) {
         $unique_id1 = mt_rand(10000, 99999);
         $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
     }
 
-    $unique_id1 = "INV".$unique_id1;
+    $unique_id1 = "INV" . $unique_id1;
 
     // Sanitize inputs to avoid SQL injection
     $fname = $conn->real_escape_string($_POST['fname']);
@@ -398,7 +400,7 @@ if (isset($_POST['submit'])) {
     $zipcode = $conn->real_escape_string($_POST['zip-code']);
     $checkin = $conn->real_escape_string($_POST['checkin']);
     $checkout = $conn->real_escape_string($_POST['checkout']);
-    $message  = $conn->real_escape_string($_POST['message']);
+    $message = $conn->real_escape_string($_POST['message']);
     $room = $conn->real_escape_string($_POST['room']);
     $bookType = $conn->real_escape_string($_POST['bookType']);
 
@@ -409,10 +411,10 @@ if (isset($_POST['submit'])) {
 
     // Insert query
     $sql = "INSERT INTO customer (CustomerID, FirstName, LastName, Gender, Email, PhoneNumber,
-                      ContactNumber, Country, City, State, Zip_Code) VALUES ('$unique_id', '$fname',
-                                                                             '$lname', '$gender','$email',
-                                                                             '$phone', '$phone', '$country', 
-                                                                             '$city','$state', '$zipcode');";
+                  ContactNumber, Country, City, State, Zip_Code) VALUES ('$unique_id', '$fname',
+                                                                         '$lname', '$gender','$email',
+                                                                         '$phone', '$phone', '$country', 
+                                                                         '$city','$state', '$zipcode');";
 
     $sqlInv = "INSERT INTO Invoice (Inv_ID, Description) VALUES ('$unique_id1', '$description');";
 
@@ -463,8 +465,8 @@ if (isset($_POST['submit'])) {
                     $Relation1 = $Relation[$j];
 
                     $sqlA = "INSERT INTO Accompanies (Name, CustomerID, RoomNum, Gender, Bdate, Relationship) VALUES ('$aname1', '$unique_id',
-                                                                                 '$room_id', '$gender1', '$BDate1'
-                                                                                 , '$Relation1');";
+                                                                             '$room_id', '$gender1', '$BDate1'
+                                                                             , '$Relation1');";
                     $conn->query($sqlA);
 
                 }
@@ -475,8 +477,8 @@ if (isset($_POST['submit'])) {
         $conn->query($sqlU);
 
         $sqlB = "INSERT INTO Book (CustomerID, RoomNum, Inv_ID, CheckInDate, CheckOutDate, BookingType, Price) VALUES 
-                                  ('$unique_id', '$room_id', '$unique_id1', '$checkin', '$checkout', '$bookType'
-                                  ,'$price');";
+                              ('$unique_id', '$room_id', '$unique_id1', '$checkin', '$checkout', '$bookType'
+                              ,'$price');";
         $conn->query($sqlB);
 
         $room_id = null;
@@ -485,7 +487,7 @@ if (isset($_POST['submit'])) {
 //        echo "No available rooms of type '$room' found.";
     }
 
+
 }
-$conn->close();
 ?>
 </html>

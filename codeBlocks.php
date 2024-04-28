@@ -25,12 +25,12 @@
                     <div class="col-lg-7 px-5 text-start header-contact-email-phone">
                         <div class="h-100 d-inline-flex align-items-center py-2 me-4">
                             <p class="mb-0"><i class="fa-solid fa-signature fa-lg me-1" style="color: #FEA116"></i>
-                                    <span id="BR-Name">'.$info['Name'].'</span>
+                                    <span id="BR-Name-Nav">'.$info['Name'].'</span>
                                 </p>
                         </div>
                         <div class="h-100 d-inline-flex align-items-center py-2">
                             <p class="mb-0"><i class="fa fa-phone-alt text-primary me-2"></i>
-                            <span id="BR-PhNumber"> '.$info["ContactNumber"].'</span></p>
+                            <span id="BR-PhNumber-Nav"> '.$info["ContactNumber"].'</span></p>
                         </div>
                     </div>
                 </div>

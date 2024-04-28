@@ -155,7 +155,6 @@
 </script>
 <script>
     <?php  foreach ($branches as $branch) : ?>
-        document.getElementById("BR-Btn-<?php echo $branch['BranchID']; ?>").classList.add("scsc");
         document.getElementById("BR-Btn-<?php echo $branch['BranchID']; ?>").addEventListener
         ("click", function() {
             const mouseoverEvent = new Event('mouseover');
@@ -163,7 +162,7 @@
             setTimeout(() => {
                 document.getElementById("BR-Map").classList.add("Contact-Map-Show");
             }, 500);
-            document.getElementById("BR-Name").innerHTML = "<?php echo $branch['Name']; ?>";
+            document.querySelector("#BR-Name").innerHTML = "<?php echo $branch['Name']; ?>";
             <?php
                 $info = getBranchInfo($branch['BranchID']);
                 $City = $info['City'];
@@ -171,7 +170,7 @@
                 $StreetNum = $info['StreetNum'];
                 $address = urlencode("$StreetNum, $City, $Country");
             ?>
-            document.getElementById("BR-PhNumber").innerHTML =
+            document.querySelector("#BR-PhNumber").innerHTML =
                 "<?php echo $info['ContactNumber']; ?>";
             document.getElementById("BR-Map").innerHTML =
                 "<iframe class='position-relative rounded w-100 h-100 Contact-Map-iframe' " +
