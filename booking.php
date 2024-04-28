@@ -354,9 +354,9 @@ include 'codeBlocks.php';
         fieldContainer.appendChild(fieldContainer2);
 
     }
-    function removeAccompanies(fieldWrapper, uniqueID) {
+    function removeAccompanies(fieldWrapper) {
         // Get the container where fields are stored
-        const fieldContainer = document.getElementById(uniqueID);
+        const fieldContainer = document.getElementById('xx');
 
         // Remove the specific field wrapper from the container
         fieldContainer.removeChild(fieldWrapper);
