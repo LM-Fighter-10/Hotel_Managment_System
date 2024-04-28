@@ -368,123 +368,128 @@ include 'codeBlocks.php';
 // Step 3: Insert data into MySQL when form is submitted
 if (isset($_POST['submit'])) {
 
+    if($isLoggedInAsCustomer) {
 
-
-    $unique_id = mt_rand(1000000000, 9999999999);
-    $result = $conn->query("select * from customer where CustomerID = $unique_id");
-    while ($result->num_rows > 0) {
         $unique_id = mt_rand(1000000000, 9999999999);
         $result = $conn->query("select * from customer where CustomerID = $unique_id");
-    }
+        while ($result->num_rows > 0) {
+            $unique_id = mt_rand(1000000000, 9999999999);
+            $result = $conn->query("select * from customer where CustomerID = $unique_id");
+        }
 
-    $unique_id = "CUST" . $unique_id;
+        $unique_id = "CUST" . $unique_id;
 
-    $unique_id1 = mt_rand(10000, 99999);
-    $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
-    while ($result->num_rows > 0) {
         $unique_id1 = mt_rand(10000, 99999);
         $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
-    }
+        while ($result->num_rows > 0) {
+            $unique_id1 = mt_rand(10000, 99999);
+            $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
+        }
 
-    $unique_id1 = "INV" . $unique_id1;
+        $unique_id1 = "INV" . $unique_id1;
 
-    // Sanitize inputs to avoid SQL injection
-    $fname = $conn->real_escape_string($_POST['fname']);
-    $lname = $conn->real_escape_string($_POST['lname']);
-    $gender = $conn->real_escape_string($_POST['gender']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $country = $conn->real_escape_string($_POST['country']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $state = $conn->real_escape_string($_POST['state']);
-    $zipcode = $conn->real_escape_string($_POST['zip-code']);
-    $checkin = $conn->real_escape_string($_POST['checkin']);
-    $checkout = $conn->real_escape_string($_POST['checkout']);
-    $message = $conn->real_escape_string($_POST['message']);
-    $room = $conn->real_escape_string($_POST['room']);
-    $bookType = $conn->real_escape_string($_POST['bookType']);
+        // Sanitize inputs to avoid SQL injection
+        $fname = $conn->real_escape_string($_POST['fname']);
+        $lname = $conn->real_escape_string($_POST['lname']);
+        $gender = $conn->real_escape_string($_POST['gender']);
+        $email = $conn->real_escape_string($_POST['email']);
+        $phone = $conn->real_escape_string($_POST['phone']);
+        $country = $conn->real_escape_string($_POST['country']);
+        $city = $conn->real_escape_string($_POST['city']);
+        $state = $conn->real_escape_string($_POST['state']);
+        $zipcode = $conn->real_escape_string($_POST['zip-code']);
+        $checkin = $conn->real_escape_string($_POST['checkin']);
+        $checkout = $conn->real_escape_string($_POST['checkout']);
+        $message = $conn->real_escape_string($_POST['message']);
+        $room = $conn->real_escape_string($_POST['room']);
+        $bookType = $conn->real_escape_string($_POST['bookType']);
 
 
-    $date = "Check in: " . $checkin . ", Check out: " . $checkout;
+        $date = "Check in: " . $checkin . ", Check out: " . $checkout;
 
-    $description = "Special Request: " . $message . "-" . $date . "-" . "Booked Room Type: " . $room;
+        $description = "Special Request: " . $message . "-" . $date . "-" . "Booked Room Type: " . $room;
 
-    // Insert query
-    $sql = "INSERT INTO customer (CustomerID, FirstName, LastName, Gender, Email, PhoneNumber,
+        // Insert query
+        $sql = "INSERT INTO customer (CustomerID, FirstName, LastName, Gender, Email, PhoneNumber,
                   ContactNumber, Country, City, State, Zip_Code) VALUES ('$unique_id', '$fname',
                                                                          '$lname', '$gender','$email',
                                                                          '$phone', '$phone', '$country', 
                                                                          '$city','$state', '$zipcode');";
 
-    $sqlInv = "INSERT INTO Invoice (Inv_ID, Description) VALUES ('$unique_id1', '$description');";
+        $sqlInv = "INSERT INTO Invoice (Inv_ID, Description) VALUES ('$unique_id1', '$description');";
 
-    if ($conn->query($sql) === TRUE) {
+        if ($conn->query($sql) === TRUE) {
 //        echo "New record created successfully!";
 
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    if ($conn->query($sqlInv) === TRUE) {
-//        echo "New record created successfully!";
-
-    } else {
-//        echo "Error: " . $sqlInv . "<br>" . $conn->error;
-    }
-
-    $sqlr = "SELECT RoomNum, Price_Per_Night FROM rooms WHERE Capacity = ? AND Status = 'Available' LIMIT 1";
-
-    $stmt = $conn->prepare($sqlr);
-    $stmt->bind_param("s", $room); // Bind the room type parameter
-    $stmt->execute();
-
-    $room_id = null;
-    $price = null;
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        $room_id = $row['RoomNum'];
-        $price = $row['Price_Per_Night'];
-    }
-
-    if ($room_id !== null) {
-
-        $aname = $_POST['aname'] ?? [];
-        $genders = $_POST['genders'] ?? [];
-        $BDate = $_POST['BDate'] ?? [];
-        $Relation = $_POST['Relationship'] ?? [];
-
-        if (count($aname) > 0) {
-
-            if (isset($_POST['aname'])) {
-
-                for ($j = 0; $j < count($aname); $j++) {
-                    $aname1 = $aname[$j];
-                    $gender1 = $genders[$j];
-                    $BDate1 = $BDate[$j];
-                    $Relation1 = $Relation[$j];
-
-                    $sqlA = "INSERT INTO Accompanies (Name, CustomerID, RoomNum, Gender, Bdate, Relationship) VALUES ('$aname1', '$unique_id',
-                                                                             '$room_id', '$gender1', '$BDate1'
-                                                                             , '$Relation1');";
-                    $conn->query($sqlA);
-
-                }
-            }
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
         }
 
-        $sqlU = "UPDATE rooms SET Status = 'Occupied' where RoomNum = $room_id";
-        $conn->query($sqlU);
+        if ($conn->query($sqlInv) === TRUE) {
+//        echo "New record created successfully!";
 
-        $sqlB = "INSERT INTO Book (CustomerID, RoomNum, Inv_ID, CheckInDate, CheckOutDate, BookingType, Price) VALUES 
-                              ('$unique_id', '$room_id', '$unique_id1', '$checkin', '$checkout', '$bookType'
-                              ,'$price');";
-        $conn->query($sqlB);
+        } else {
+//        echo "Error: " . $sqlInv . "<br>" . $conn->error;
+        }
+
+        $sqlr = "SELECT RoomNum, Price_Per_Night FROM rooms WHERE Capacity = ? AND Status = 'Available' LIMIT 1";
+
+        $stmt = $conn->prepare($sqlr);
+        $stmt->bind_param("s", $room); // Bind the room type parameter
+        $stmt->execute();
 
         $room_id = null;
+        $price = null;
+
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $room_id = $row['RoomNum'];
+            $price = $row['Price_Per_Night'];
+        }
+
+        if ($room_id !== null) {
+
+            $aname = $_POST['aname'] ?? [];
+            $genders = $_POST['genders'] ?? [];
+            $BDate = $_POST['BDate'] ?? [];
+            $Relation = $_POST['Relationship'] ?? [];
+
+            if (count($aname) > 0) {
+
+                if (isset($_POST['aname'])) {
+
+                    for ($j = 0; $j < count($aname); $j++) {
+                        $aname1 = $aname[$j];
+                        $gender1 = $genders[$j];
+                        $BDate1 = $BDate[$j];
+                        $Relation1 = $Relation[$j];
+
+                        $sqlA = "INSERT INTO Accompanies (Name, CustomerID, RoomNum, Gender, Bdate, Relationship) VALUES ('$aname1', '$unique_id',
+                                                                             '$room_id', '$gender1', '$BDate1'
+                                                                             , '$Relation1');";
+                        $conn->query($sqlA);
+
+                    }
+                }
+            }
+
+            $sqlU = "UPDATE rooms SET Status = 'Occupied' where RoomNum = $room_id";
+            $conn->query($sqlU);
+
+            $sqlB = "INSERT INTO Book (CustomerID, RoomNum, Inv_ID, CheckInDate, CheckOutDate, BookingType, Price) VALUES 
+                              ('$unique_id', '$room_id', '$unique_id1', '$checkin', '$checkout', '$bookType'
+                              ,'$price');";
+            $conn->query($sqlB);
+
+            $room_id = null;
+
+        } else {
+//        echo "No available rooms of type '$room' found.";
+        }
 
     } else {
-//        echo "No available rooms of type '$room' found.";
+        echo "<script>alert('Please Login or Register to Continue the Booking Process!');
+                window.location.href = 'signUp.php';</script>";
     }
 
 
