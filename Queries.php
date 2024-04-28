@@ -42,9 +42,9 @@
                                     SELECT COUNT(*) INTO countExist FROM Customer WHERE CustomerID = p_CustomerID;
                                 
                                     IF countExist > 0 THEN
-                                        RETURN 0;
-                                    ELSE
                                         RETURN 1;
+                                    ELSE
+                                        RETURN 0;
                                     END IF;
                                 END //
                                 
