@@ -392,8 +392,9 @@
     }
 
     function editRoom() {
-        global $roomInd;
-        return "<script>
+        global $isLoggedIn, $isLoggedInAsEmployee, $roomInd;
+        if ($isLoggedIn and $isLoggedInAsEmployee) {
+            return "<script>
     const roomEditForm = document.getElementById('RoomEditForm');
     const roomEditBackgroundDiv = document.getElementById('backgroundCover');
     const roomNumber = document.getElementById('roomNumber');
@@ -539,425 +540,432 @@
         }
     }
     </script>";
+        } else {
+            return "";
+        }
     }
 
     function editEmployee() {
-        global $empNo;
+        global $empNo, $conn, $GetEmployeeLoggedIn, $isLoggedIn, $isLoggedInAsEmployee;
+        if ($isLoggedIn and $isLoggedInAsEmployee and isset($conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName']) and
+                $conn->query($GetEmployeeLoggedIn)->fetch_assoc()['RoleName'] == 'Manager') {
        return "<script>
-
-    const employeeEditForm = document.getElementById('EmployeeEditForm');
-    const employeeEditBackgroundDiv = document.getElementById('backgroundCover2');
-    const employeeNumber = document.getElementById('employeeNumber');
-    const fname = document.getElementById('fname');
-    const lname = document.getElementById('lname');
-    const rolename = document.getElementById('rolename');
-    const workinghours =document.getElementById('workinghours');
-    const salary =document.getElementById('salary');
-
-    const phone =document.getElementById('phone');
-    const email =document.getElementById('email');
-    const country =document.getElementById('country');
-    const city =document.getElementById('city');
-    const state =document.getElementById('state');
-    const zipcode =document.getElementById('zipcode');
-    const serviceID =document.getElementById('serviceID');
-    const restaurantID =document.getElementById('restaurantID');
-    var selectedEmployeeNum = '';
-
-
-    function EmployeeScript() {
-        document.getElementById('exitEdit2').onclick = function () {
-            if (employeeEditForm.classList.contains('showEmployeeEditForm'))
-                employeeEditForm.classList.remove('showEmployeeEditForm');
-            if (employeeEditBackgroundDiv.classList.contains('showBackground-cover'))
-                employeeEditBackgroundDiv.classList.remove('showBackground-cover');
-            document.body.style.overflow = '';
-            document.getElementById('EditErrorMsg2').classList.remove('showEditErrorMsg');
-
-            employeeNumber.parentNode.children[1].style.color = '';
-            fname.parentNode.children[1].style.color = '';
-            lname.parentNode.children[1].style.color = '';
-            rolename.parentNode.children[1].style.color = '';
-            workinghours.parentNode.children[1].style.color = '';
-            salary.parentNode.children[1].style.color='';
-            phone.parentNode.children[1].style.color ='';
-            country.parentNode.children[1].style.color ='';
-            city.parentNode.children[1].style.color ='';
-            state.parentNode.children[1].style.color ='';
-            zipcode.parentNode.children[1].style.color ='';
-            restaurantID.parentNode.children[1].style.color ='';
-            serviceID.parentNode.children[1].style.color ='';
-
-        }
-        for (let x = 1; x <= $empNo; x++) {
-            // const penElement = document.getElementById('penE' + x);
-            // if(penElement !== null)
-            document.getElementById('penE' + x).onclick = function () {
-                document.getElementById('EditErrorMsg2').classList.remove('showEditErrorMsg');
-                document.getElementById('EditErrorMsg2').innerHTML = '';
-                selectedEmployeeNum = document.getElementById('Employeeid'+x).innerHTML;
-                employeeEditForm.classList.add('showEmployeeEditForm');
-                employeeNumber.value = selectedEmployeeNum;
-                employeeNumber.focus();
-                fname.value = document.getElementById('FN' + x).innerHTML;
-                lname.value = document.getElementById('LN' + x).innerHTML;
-                rolename.value =document.getElementById('RN' + x).innerHTML;
-                workinghours.value =document.getElementById('Working_hours' + x).innerHTML;
-                salary.value=document.getElementById('Salary' + x).innerHTML;
-                phone.value =document.getElementById('phoneNum' + x).innerHTML;
-                email.value =document.getElementById('Email' + x).innerHTML;
-                country.value =document.getElementById('Country' + x).innerHTML;
-                city.value =document.getElementById('City' + x).innerHTML;
-                state.value =document.getElementById('State' + x).innerHTML;
-                zipcode.value =document.getElementById('Zip_Code' + x).innerHTML;
-                serviceID.value =document.getElementById('service-ID' + x).innerHTML;
-                restaurantID.value =document.getElementById('restaurant-ID' + x).innerHTML;
-
-                employeeEditBackgroundDiv.classList.add('showBackground-cover');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-    }
-
-    var fname_errMsg='', lname_errMsg='', Rname_errMsg='',workingh_ErrorMsg = '', salary_errorMsg=''
-    country_errMsg='', city_errMsg='', state_errMsg ='', zipcode_errMsg='', phone_errMsg='', email_errMsg='', email_empty_errMsg='', serviceId_errMsg = '', restaurantId_errMsg = '';
-
-    function validateInputs() {
-
-    // Send data to PHP script for validation via fetch
-        fetch('validateEditEmployee.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                employeeNumber: employeeNumber.value,
-                fname:fname.value,
-                lname:lname.value,
-                rolename:rolename.value,
-                workinghours:workinghours.value,
-                phone:phone.value,
-                email:email.value,
-                salary:salary.value,
-                city:city.value,
-                state:state.value,
-                country:country.value,
-                zipcode:zipcode.value,
-                serviceID:serviceID.value,
-                restaurantID:restaurantID.value
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.restaurantId_error);
-            if (data.workingh_error || data.FirstName_error || data.LastName_error || data.RoleName_error || data
-                    .salary_error|| data.country_error || data.email_error || data.restaurantId_error ||
-                    data.serviceId_error || data.city_error || data.state_error|| data.zipcode_error
-                    || data.phone_error) {
-                document.getElementById('EditErrorMsg2').classList.add('showEditErrorMsg');
-
-                if (data.workingh_error){
-                    workingh_ErrorMsg = data.workingh_ErrorMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.workingh_ErrorMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.workingh_ErrorMsg + '</span>';
+                const employeeEditForm = document.getElementById('EmployeeEditForm');
+                const employeeEditBackgroundDiv = document.getElementById('backgroundCover2');
+                const employeeNumber = document.getElementById('employeeNumber');
+                const fname = document.getElementById('fname');
+                const lname = document.getElementById('lname');
+                const rolename = document.getElementById('rolename');
+                const workinghours =document.getElementById('workinghours');
+                const salary =document.getElementById('salary');
+            
+                const phone =document.getElementById('phone');
+                const email =document.getElementById('email');
+                const country =document.getElementById('country');
+                const city =document.getElementById('city');
+                const state =document.getElementById('state');
+                const zipcode =document.getElementById('zipcode');
+                const serviceID =document.getElementById('serviceID');
+                const restaurantID =document.getElementById('restaurantID');
+                var selectedEmployeeNum = '';
+            
+            
+                function EmployeeScript() {
+                    document.getElementById('exitEdit2').onclick = function () {
+                        if (employeeEditForm.classList.contains('showEmployeeEditForm'))
+                            employeeEditForm.classList.remove('showEmployeeEditForm');
+                        if (employeeEditBackgroundDiv.classList.contains('showBackground-cover'))
+                            employeeEditBackgroundDiv.classList.remove('showBackground-cover');
+                        document.body.style.overflow = '';
+                        document.getElementById('EditErrorMsg2').classList.remove('showEditErrorMsg');
+            
+                        employeeNumber.parentNode.children[1].style.color = '';
+                        fname.parentNode.children[1].style.color = '';
+                        lname.parentNode.children[1].style.color = '';
+                        rolename.parentNode.children[1].style.color = '';
+                        workinghours.parentNode.children[1].style.color = '';
+                        salary.parentNode.children[1].style.color='';
+                        phone.parentNode.children[1].style.color ='';
+                        country.parentNode.children[1].style.color ='';
+                        city.parentNode.children[1].style.color ='';
+                        state.parentNode.children[1].style.color ='';
+                        zipcode.parentNode.children[1].style.color ='';
+                        restaurantID.parentNode.children[1].style.color ='';
+                        serviceID.parentNode.children[1].style.color ='';
+            
                     }
-                    if (workinghours.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Working hours cannot be empty</span>', '');
+                    for (let x = 1; x <= $empNo; x++) {
+                        // const penElement = document.getElementById('penE' + x);
+                        // if(penElement !== null)
+                        document.getElementById('penE' + x).onclick = function () {
+                            document.getElementById('EditErrorMsg2').classList.remove('showEditErrorMsg');
+                            document.getElementById('EditErrorMsg2').innerHTML = '';
+                            selectedEmployeeNum = document.getElementById('Employeeid'+x).innerHTML;
+                            employeeEditForm.classList.add('showEmployeeEditForm');
+                            employeeNumber.value = selectedEmployeeNum;
+                            employeeNumber.focus();
+                            fname.value = document.getElementById('FN' + x).innerHTML;
+                            lname.value = document.getElementById('LN' + x).innerHTML;
+                            rolename.value =document.getElementById('RN' + x).innerHTML;
+                            workinghours.value =document.getElementById('Working_hours' + x).innerHTML;
+                            salary.value=document.getElementById('Salary' + x).innerHTML;
+                            phone.value =document.getElementById('phoneNum' + x).innerHTML;
+                            email.value =document.getElementById('Email' + x).innerHTML;
+                            country.value =document.getElementById('Country' + x).innerHTML;
+                            city.value =document.getElementById('City' + x).innerHTML;
+                            state.value =document.getElementById('State' + x).innerHTML;
+                            zipcode.value =document.getElementById('Zip_Code' + x).innerHTML;
+                            serviceID.value =document.getElementById('service-ID' + x).innerHTML;
+                            restaurantID.value =document.getElementById('restaurant-ID' + x).innerHTML;
+            
+                            employeeEditBackgroundDiv.classList.add('showBackground-cover');
+                            document.body.style.overflow = 'hidden';
+                        }
                     }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + workingh_ErrorMsg + '</span>', '');
                 }
-
-
-                if (data.salary_error){
-                    salary_errorMsg = data.salary_errorMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.salary_errorMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.salary_errorMsg + '</span>';
-                    }
-                    if (salary.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Salary cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + salary_errorMsg + '</span>', '');
-                }
-
-                if (data.FirstName_error){
-                    fname_errMsg = data.fname_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.fname_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.fname_errMsg + '</span>';
-                    }
-                    if (fname.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>First Name cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + fname_errMsg + '</span>', '');
-                }
-
-                if (data.RoleName_error){
-                    Rname_errMsg= data.Rname_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.Rname_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.Rname_errMsg + '</span>';
-                    }
-                    if (rolename.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Role Name cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + Rname_errMsg + '</span>', '');
-                }
-
-                if (data.city_error){
-                    city_errMsg = data.city_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.city_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.city_errMsg + '</span>';
-                    }
-                    if (city.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>City cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + city_errMsg + '</span>', '');
-                }
-                if (data.state_error){
-                    state_errMsg = data.state_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.state_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.state_errMsg + '</span>';
-                    }
-                    if (state.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>State cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + state_errMsg + '</span>', '');
-                }
-
-                if (data.zipcode_error){
-                   zipcode_errMsg = data.zipcode_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.zipcode_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.zipcode_errMsg + '</span>';
-                    }
-                    if (zipcode.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Zip code cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + zipcode_errMsg + '</span>', '');
-                }
-
-                if (data.phone_error){
-                   phone_errMsg = data.phone_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.phone_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.phone_errMsg + '</span>';
-                    }
-                    if (phone.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Phone Number cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + phone_errMsg + '</span>', '');
-                }
-
-                if (data.LastName_error){
-                    lname_errMsg = data.lname_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.lname_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.lname_errMsg + '</span>';
-                    }
-                    if (lname.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Last Name cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                        document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + lname_errMsg + '</span>', '');
-                }
-
-                if (data.email_error){
-                    email_errMsg= data.email_errorMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + email_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + email_errMsg + '</span>';
-                    }
-                    if (email.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Email cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + email_errMsg + '</span>', '');
-                }
-
-                if (data.country_error){
-                    country_errMsg = data.country_errMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + data.country_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + data.country_errMsg + '</span>';
-                    }
-                    if (country.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Country cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + country_errMsg + '</span>', '');
-                }
-
-                if (data.serviceId_error){
-                    serviceId_errMsg = data.serviceId_errorMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + serviceId_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + serviceId_errMsg + '</span>';
-                    }
-                    if (serviceID.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Services id cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + serviceId_errMsg + '</span>', '');
-                }
-
-                if (data.restaurantId_error){
-                    restaurantId_errMsg = data.restaurantId_errorMsg;
-                    if (!document.getElementById('EditErrorMsg2').innerHTML
-                        .includes('<span>' + restaurantId_errMsg + '</span>')){
-                        document.getElementById('EditErrorMsg2').innerHTML +=
-                            '<span>' + restaurantId_errMsg + '</span>';
-                    }
-                    if (restaurantID.value !== ''){
-                        document.getElementById('EditErrorMsg2').innerHTML =
-                            document.getElementById('EditErrorMsg2').innerHTML
-                                .replace('<span>Restaurant id cannot be empty</span>', '');
-                    }
-                } else{
-                    document.getElementById('EditErrorMsg2').innerHTML =
-                    document.getElementById('EditErrorMsg2').innerHTML
-                            .replace('<span>' + restaurantId_errMsg + '</span>', '');
-                }
-
-            } else {
-                document.getElementById('EditErrorMsg2').classList.remove('showEditErrorMsg');
-                document.getElementById('EditErrorMsg2').innerHTML = '';
-            }
-            // Update label colors based on validation results
-            document.getElementById('workinghlabel').style.color = data.workingh_error ? 'red' : '';
-            document.getElementById('FnameLabel').style.color = data.FirstName_error ? 'red' : '';
-            document.getElementById('lnameLabel').style.color = data.LastName_error ? 'red' : '';
-            document.getElementById('RolenameLabel').style.color = data.RoleName_error ? 'red' : '';
-            document.getElementById('salarylabel').style.color = data.salary_error ? 'red' : '';
-            document.getElementById('countrylabel').style.color = data.country_error ? 'red' : '';
-            document.getElementById('citylabel').style.color = data.city_error ? 'red' : '';
-            document.getElementById('statelabel').style.color = data.state_error ? 'red' : '';
-            document.getElementById('zipcodelabel').style.color = data.zipcode_error ? 'red' : '';
-            document.getElementById('phonelabel').style.color = data.phone_error ? 'red' : '';
-            document.getElementById('emaillabel').style.color = data.email_error ? 'red' : '';
-            document.getElementById('sidlabel').style.color = data.serviceId_error ? 'red' : '';
-            document.getElementById('ridlabel').style.color = data.restaurantId_error ? 'red' : '';
-        });
-    }
-
-    EmployeeScript();
-
-    fname.addEventListener('input', validateInputs); lname.addEventListener('input', validateInputs);
-    email.addEventListener('input', validateInputs); rolename.addEventListener('input', validateInputs);
-    workinghours.addEventListener('input', validateInputs); salary.addEventListener('input', validateInputs);
-    country.addEventListener('input', validateInputs); city.addEventListener('input', validateInputs);
-    state.addEventListener('input', validateInputs); zipcode.addEventListener('input', validateInputs);
-    phone.addEventListener('input', validateInputs); serviceID.addEventListener('input', validateInputs);
-    restaurantID.addEventListener('input', validateInputs);
-    document.getElementById('EmployeeEditSubmitBtn').onclick = function () {
-        validateInputs();
-        if (document.getElementById('EditErrorMsg2').innerHTML === '') {
-            if (document.getElementById('EditErrorMsg2').innerHTML === '') {
-                fetch('EmployeeEditSubmit.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        employeeNumber: selectedEmployeeNum,
-                        fname: fname.value,
-                        lname: lname.value,
-                        rolename: rolename.value,
-                        workinghours: workinghours.value,
-                        salary: salary.value,
-                        country: country.value,
-                        city: city.value,
-                        state: state.value,
-                        zipcode: zipcode.value,
-                        phone: phone.value,
-                        email: email.value,
-                        serviceID: serviceID.value,
-                        restaurantID: restaurantID.value
+            
+                var fname_errMsg='', lname_errMsg='', Rname_errMsg='',workingh_ErrorMsg = '', salary_errorMsg=''
+                country_errMsg='', city_errMsg='', state_errMsg ='', zipcode_errMsg='', phone_errMsg='', email_errMsg='', email_empty_errMsg='', serviceId_errMsg = '', restaurantId_errMsg = '';
+            
+                function validateInputs() {
+            
+                // Send data to PHP script for validation via fetch
+                    fetch('validateEditEmployee.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            employeeNumber: employeeNumber.value,
+                            fname:fname.value,
+                            lname:lname.value,
+                            rolename:rolename.value,
+                            workinghours:workinghours.value,
+                            phone:phone.value,
+                            email:email.value,
+                            salary:salary.value,
+                            city:city.value,
+                            state:state.value,
+                            country:country.value,
+                            zipcode:zipcode.value,
+                            serviceID:serviceID.value,
+                            restaurantID:restaurantID.value
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(data => {
-                        if (data.success) {
-                            document.getElementById('exitEdit2').click();
-                            document.getElementById('employeesContainer').innerHTML = data.employee;
-                            EmployeeScript();
+                        console.log(data.restaurantId_error);
+                        if (data.workingh_error || data.FirstName_error || data.LastName_error || data.RoleName_error || data
+                                .salary_error|| data.country_error || data.email_error || data.restaurantId_error ||
+                                data.serviceId_error || data.city_error || data.state_error|| data.zipcode_error
+                                || data.phone_error) {
+                            document.getElementById('EditErrorMsg2').classList.add('showEditErrorMsg');
+            
+                            if (data.workingh_error){
+                                workingh_ErrorMsg = data.workingh_ErrorMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.workingh_ErrorMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.workingh_ErrorMsg + '</span>';
+                                }
+                                if (workinghours.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Working hours cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + workingh_ErrorMsg + '</span>', '');
+                            }
+            
+            
+                            if (data.salary_error){
+                                salary_errorMsg = data.salary_errorMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.salary_errorMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.salary_errorMsg + '</span>';
+                                }
+                                if (salary.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Salary cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + salary_errorMsg + '</span>', '');
+                            }
+            
+                            if (data.FirstName_error){
+                                fname_errMsg = data.fname_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.fname_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.fname_errMsg + '</span>';
+                                }
+                                if (fname.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>First Name cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + fname_errMsg + '</span>', '');
+                            }
+            
+                            if (data.RoleName_error){
+                                Rname_errMsg= data.Rname_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.Rname_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.Rname_errMsg + '</span>';
+                                }
+                                if (rolename.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Role Name cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + Rname_errMsg + '</span>', '');
+                            }
+            
+                            if (data.city_error){
+                                city_errMsg = data.city_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.city_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.city_errMsg + '</span>';
+                                }
+                                if (city.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>City cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + city_errMsg + '</span>', '');
+                            }
+                            if (data.state_error){
+                                state_errMsg = data.state_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.state_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.state_errMsg + '</span>';
+                                }
+                                if (state.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>State cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + state_errMsg + '</span>', '');
+                            }
+            
+                            if (data.zipcode_error){
+                               zipcode_errMsg = data.zipcode_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.zipcode_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.zipcode_errMsg + '</span>';
+                                }
+                                if (zipcode.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Zip code cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + zipcode_errMsg + '</span>', '');
+                            }
+            
+                            if (data.phone_error){
+                               phone_errMsg = data.phone_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.phone_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.phone_errMsg + '</span>';
+                                }
+                                if (phone.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Phone Number cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + phone_errMsg + '</span>', '');
+                            }
+            
+                            if (data.LastName_error){
+                                lname_errMsg = data.lname_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.lname_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.lname_errMsg + '</span>';
+                                }
+                                if (lname.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Last Name cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                    document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + lname_errMsg + '</span>', '');
+                            }
+            
+                            if (data.email_error){
+                                email_errMsg= data.email_errorMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + email_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + email_errMsg + '</span>';
+                                }
+                                if (email.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Email cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + email_errMsg + '</span>', '');
+                            }
+            
+                            if (data.country_error){
+                                country_errMsg = data.country_errMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + data.country_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + data.country_errMsg + '</span>';
+                                }
+                                if (country.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Country cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + country_errMsg + '</span>', '');
+                            }
+            
+                            if (data.serviceId_error){
+                                serviceId_errMsg = data.serviceId_errorMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + serviceId_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + serviceId_errMsg + '</span>';
+                                }
+                                if (serviceID.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Services id cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + serviceId_errMsg + '</span>', '');
+                            }
+            
+                            if (data.restaurantId_error){
+                                restaurantId_errMsg = data.restaurantId_errorMsg;
+                                if (!document.getElementById('EditErrorMsg2').innerHTML
+                                    .includes('<span>' + restaurantId_errMsg + '</span>')){
+                                    document.getElementById('EditErrorMsg2').innerHTML +=
+                                        '<span>' + restaurantId_errMsg + '</span>';
+                                }
+                                if (restaurantID.value !== ''){
+                                    document.getElementById('EditErrorMsg2').innerHTML =
+                                        document.getElementById('EditErrorMsg2').innerHTML
+                                            .replace('<span>Restaurant id cannot be empty</span>', '');
+                                }
+                            } else{
+                                document.getElementById('EditErrorMsg2').innerHTML =
+                                document.getElementById('EditErrorMsg2').innerHTML
+                                        .replace('<span>' + restaurantId_errMsg + '</span>', '');
+                            }
+            
+                        } else {
+                            document.getElementById('EditErrorMsg2').classList.remove('showEditErrorMsg');
+                            document.getElementById('EditErrorMsg2').innerHTML = '';
                         }
+                        // Update label colors based on validation results
+                        document.getElementById('workinghlabel').style.color = data.workingh_error ? 'red' : '';
+                        document.getElementById('FnameLabel').style.color = data.FirstName_error ? 'red' : '';
+                        document.getElementById('lnameLabel').style.color = data.LastName_error ? 'red' : '';
+                        document.getElementById('RolenameLabel').style.color = data.RoleName_error ? 'red' : '';
+                        document.getElementById('salarylabel').style.color = data.salary_error ? 'red' : '';
+                        document.getElementById('countrylabel').style.color = data.country_error ? 'red' : '';
+                        document.getElementById('citylabel').style.color = data.city_error ? 'red' : '';
+                        document.getElementById('statelabel').style.color = data.state_error ? 'red' : '';
+                        document.getElementById('zipcodelabel').style.color = data.zipcode_error ? 'red' : '';
+                        document.getElementById('phonelabel').style.color = data.phone_error ? 'red' : '';
+                        document.getElementById('emaillabel').style.color = data.email_error ? 'red' : '';
+                        document.getElementById('sidlabel').style.color = data.serviceId_error ? 'red' : '';
+                        document.getElementById('ridlabel').style.color = data.restaurantId_error ? 'red' : '';
                     });
-            }
+                }
+            
+                EmployeeScript();
+            
+                fname.addEventListener('input', validateInputs); lname.addEventListener('input', validateInputs);
+                email.addEventListener('input', validateInputs); rolename.addEventListener('input', validateInputs);
+                workinghours.addEventListener('input', validateInputs); salary.addEventListener('input', validateInputs);
+                country.addEventListener('input', validateInputs); city.addEventListener('input', validateInputs);
+                state.addEventListener('input', validateInputs); zipcode.addEventListener('input', validateInputs);
+                phone.addEventListener('input', validateInputs); serviceID.addEventListener('input', validateInputs);
+                restaurantID.addEventListener('input', validateInputs);
+                document.getElementById('EmployeeEditSubmitBtn').onclick = function () {
+                    validateInputs();
+                    if (document.getElementById('EditErrorMsg2').innerHTML === '') {
+                        if (document.getElementById('EditErrorMsg2').innerHTML === '') {
+                            fetch('EmployeeEditSubmit.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: new URLSearchParams({
+                                    employeeNumber: selectedEmployeeNum,
+                                    fname: fname.value,
+                                    lname: lname.value,
+                                    rolename: rolename.value,
+                                    workinghours: workinghours.value,
+                                    salary: salary.value,
+                                    country: country.value,
+                                    city: city.value,
+                                    state: state.value,
+                                    zipcode: zipcode.value,
+                                    phone: phone.value,
+                                    email: email.value,
+                                    serviceID: serviceID.value,
+                                    restaurantID: restaurantID.value
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        document.getElementById('exitEdit2').click();
+                                        document.getElementById('employeesContainer').innerHTML = data.employee;
+                                        EmployeeScript();
+                                    }
+                                });
+                        }
+                    }
+                }
+                </script>";
+       } else {
+            return "";
         }
-    }
-    </script>";
     }
 
     function getRoom_Emp_Cust_Count() {

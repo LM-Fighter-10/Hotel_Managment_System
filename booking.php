@@ -7,6 +7,43 @@ include 'codeBlocks.php';
     <?=$headerBlock?>
 </head>
 
+<?php
+    $fname = '';
+    $lname = '';
+    $gender = '';
+    $email = '';
+    $phoneNum = '';
+    $contactNum = '';
+    $country = '';
+    $city = '';
+    $state = '';
+    $zipcode = '';
+
+    if ($isLoggedInAsCustomer) {
+        $id = $_SESSION['username'];
+
+        $sqlc = "SELECT * FROM customer WHERE CustomerID = '$id' ";
+
+        $stmt = $conn->prepare($sqlc);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $fname = $row['FirstName'];
+            $lname = $row['LastName'];
+            $gender = $row['Gender'];
+            $email = $row['Email'];
+            $phoneNum = $row['PhoneNumber'];
+            $contactNum = $row['ContactNumber'];
+            $country = $row['Country'];
+            $city = $row['City'];
+            $state = $row['State'];
+            $zipcode = $row['Zip_Code'];
+        }
+
+    }
+?>
+
 <body>
 <div class="bg-white p-0">
     <?=$navBarBlock?>
@@ -104,77 +141,80 @@ include 'codeBlocks.php';
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="fname" id="Fname" placeholder="First Name">
+                                        <input readonly type="text" class="form-control" name="fname" id="Fname" placeholder="First Name" value="<?php echo $fname; ?>">
                                         <label for="name">First Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="lname" id="Lname" placeholder="Last Name">
+                                        <input readonly type="text" class="form-control" name="lname" id="Lname" placeholder="Last Name" value="<?php echo $lname; ?>">
                                         <label for="name">Last Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <select class="form-select" id="select1" name="gender">
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                        <label for="select1">Select Gender</label>
+                                        <input readonly type="gender" class="form-control" id="gender" name="gender" value="<?php echo $gender; ?>">
+                                        <label for="gender">Gender</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email">
+                                        <input readonly type="email" class="form-control" name="email" id="email" placeholder="Your Email" value="<?php echo $email; ?>">
                                         <label for="email">Your Email</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number">
+                                        <input readonly type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number" value="<?php echo $phoneNum; ?>">
                                         <label for="phone">Phone Number</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="country" id="country" placeholder="Country">
+                                        <input readonly type="tel" class="form-control" name="phone1" id="phone1" placeholder="Contact Number" value="<?php echo $contactNum; ?>">
+                                        <label for="phone">Contact Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input readonly type="text" class="form-control" name="country" id="country" placeholder="Country" value="<?php echo $country; ?>">
                                         <label for="country">Country</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="city" id="city" placeholder="City">
+                                        <input readonly type="text" class="form-control" name="city" id="city" placeholder="City" value="<?php echo $city; ?>">
                                         <label for="city">City</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="state" id="state" placeholder="State">
+                                        <input readonly type="text" class="form-control" name="state" id="state" placeholder="State" value="<?php echo $state; ?>">
                                         <label for="state">State</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" name="zip-code" id="zip-code" placeholder="Zip Code">
+                                        <input readonly type="text" class="form-control" name="zip-code" id="zip-code" placeholder="Zip Code" value="<?php echo $zipcode; ?>">
                                         <label for="zip-code">Zip Code</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating date" id="date3" data-target-input="nearest">
-                                        <input type="date" class="form-control" name="checkin" id="checkin" placeholder="Check In"/>
+                                        <input required type="date" class="form-control" name="checkin" id="checkin" placeholder="Check In"/>
                                         <label for="checkin">Check In</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating date" id="date4" data-target-input="nearest">
-                                        <input type="date" class="form-control" name="checkout" id="checkout" placeholder="Check Out"/>
+                                        <input required type="date" class="form-control" name="checkout" id="checkout" placeholder="Check Out"/>
                                         <label for="checkout">Check Out</label>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-floating">
-                                        <select class="form-select" id="select3" name="bookType">
+                                        <select required class="form-select" id="select3" name="bookType">
                                             <option value="Standard">Standard</option>
                                             <option value="Half-Board">Half-Board</option>
                                             <option value="All-Inclusive">All-Inclusive</option>
@@ -186,7 +226,7 @@ include 'codeBlocks.php';
                                 <div>
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <select class="form-select" id="select2" name="room">
+                                        <select required class="form-select" id="select2" name="room">
                                             <option value="Single">Single</option>
                                             <option value="Double">Double</option>
                                             <option value="Suite">Suite</option>
@@ -365,129 +405,99 @@ include 'codeBlocks.php';
 </script>
 
 <?php
+
+
 // Step 3: Insert data into MySQL when form is submitted
 if (isset($_POST['submit'])) {
 
+    if ($isLoggedInAsCustomer) {
 
 
-    $unique_id = mt_rand(1000000000, 9999999999);
-    $result = $conn->query("select * from customer where CustomerID = $unique_id");
-    while ($result->num_rows > 0) {
-        $unique_id = mt_rand(1000000000, 9999999999);
-        $result = $conn->query("select * from customer where CustomerID = $unique_id");
-    }
-
-    $unique_id = "CUST" . $unique_id;
-
-    $unique_id1 = mt_rand(10000, 99999);
-    $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
-    while ($result->num_rows > 0) {
         $unique_id1 = mt_rand(10000, 99999);
         $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
-    }
-
-    $unique_id1 = "INV" . $unique_id1;
-
-    // Sanitize inputs to avoid SQL injection
-    $fname = $conn->real_escape_string($_POST['fname']);
-    $lname = $conn->real_escape_string($_POST['lname']);
-    $gender = $conn->real_escape_string($_POST['gender']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $phone = $conn->real_escape_string($_POST['phone']);
-    $country = $conn->real_escape_string($_POST['country']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $state = $conn->real_escape_string($_POST['state']);
-    $zipcode = $conn->real_escape_string($_POST['zip-code']);
-    $checkin = $conn->real_escape_string($_POST['checkin']);
-    $checkout = $conn->real_escape_string($_POST['checkout']);
-    $message = $conn->real_escape_string($_POST['message']);
-    $room = $conn->real_escape_string($_POST['room']);
-    $bookType = $conn->real_escape_string($_POST['bookType']);
-
-
-    $date = "Check in: " . $checkin . ", Check out: " . $checkout;
-
-    $description = "Special Request: " . $message . "-" . $date . "-" . "Booked Room Type: " . $room;
-
-    // Insert query
-    $sql = "INSERT INTO customer (CustomerID, FirstName, LastName, Gender, Email, PhoneNumber,
-                  ContactNumber, Country, City, State, Zip_Code) VALUES ('$unique_id', '$fname',
-                                                                         '$lname', '$gender','$email',
-                                                                         '$phone', '$phone', '$country', 
-                                                                         '$city','$state', '$zipcode');";
-
-    $sqlInv = "INSERT INTO Invoice (Inv_ID, Description) VALUES ('$unique_id1', '$description');";
-
-    if ($conn->query($sql) === TRUE) {
-//        echo "New record created successfully!";
-
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    if ($conn->query($sqlInv) === TRUE) {
-//        echo "New record created successfully!";
-
-    } else {
-//        echo "Error: " . $sqlInv . "<br>" . $conn->error;
-    }
-
-    $sqlr = "SELECT RoomNum, Price_Per_Night FROM rooms WHERE Capacity = ? AND Status = 'Available' LIMIT 1";
-
-    $stmt = $conn->prepare($sqlr);
-    $stmt->bind_param("s", $room); // Bind the room type parameter
-    $stmt->execute();
-
-    $room_id = null;
-    $price = null;
-
-    $result = $stmt->get_result();
-    if ($row = $result->fetch_assoc()) {
-        $room_id = $row['RoomNum'];
-        $price = $row['Price_Per_Night'];
-    }
-
-    if ($room_id !== null) {
-
-        $aname = $_POST['aname'] ?? [];
-        $genders = $_POST['genders'] ?? [];
-        $BDate = $_POST['BDate'] ?? [];
-        $Relation = $_POST['Relationship'] ?? [];
-
-        if (count($aname) > 0) {
-
-            if (isset($_POST['aname'])) {
-
-                for ($j = 0; $j < count($aname); $j++) {
-                    $aname1 = $aname[$j];
-                    $gender1 = $genders[$j];
-                    $BDate1 = $BDate[$j];
-                    $Relation1 = $Relation[$j];
-
-                    $sqlA = "INSERT INTO Accompanies (Name, CustomerID, RoomNum, Gender, Bdate, Relationship) VALUES ('$aname1', '$unique_id',
-                                                                             '$room_id', '$gender1', '$BDate1'
-                                                                             , '$Relation1');";
-                    $conn->query($sqlA);
-
-                }
-            }
+        while ($result->num_rows > 0) {
+            $unique_id1 = mt_rand(10000, 99999);
+            $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
         }
 
-        $sqlU = "UPDATE rooms SET Status = 'Occupied' where RoomNum = $room_id";
-        $conn->query($sqlU);
+        $unique_id1 = "INV" . $unique_id1;
 
-        $sqlB = "INSERT INTO Book (CustomerID, RoomNum, Inv_ID, CheckInDate, CheckOutDate, BookingType, Price) VALUES 
-                              ('$unique_id', '$room_id', '$unique_id1', '$checkin', '$checkout', '$bookType'
-                              ,'$price');";
-        $conn->query($sqlB);
+        // Sanitize inputs to avoid SQL injection
+        $checkin = $conn->real_escape_string($_POST['checkin']);
+        $checkout = $conn->real_escape_string($_POST['checkout']);
+        $message = $conn->real_escape_string($_POST['message']);
+        $room = $conn->real_escape_string($_POST['room']);
+        $bookType = $conn->real_escape_string($_POST['bookType']);
+
+
+        $date = "Check in: " . $checkin . ", Check out: " . $checkout;
+
+        $description = "Special Request: " . $message . "\n-" . $date . "\n-" . "Booked Room Type: " . $room;
+
+        $sqlInv = "INSERT INTO Invoice (Inv_ID, Description) VALUES ('$unique_id1', '$description');";
+
+
+        $conn->query($sqlInv);
+
+        $sqlr = "SELECT RoomNum, Price_Per_Night FROM rooms WHERE Capacity = ? AND Status = 'Available' LIMIT 1";
+
+        $stmt = $conn->prepare($sqlr);
+        $stmt->bind_param("s", $room); // Bind the room type parameter
+        $stmt->execute();
 
         $room_id = null;
+        $price = null;
+
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $room_id = $row['RoomNum'];
+            $price = $row['Price_Per_Night'];
+        }
+
+        if ($room_id !== null) {
+
+            $aname = $_POST['aname'] ?? [];
+            $genders = $_POST['genders'] ?? [];
+            $BDate = $_POST['BDate'] ?? [];
+            $Relation = $_POST['Relationship'] ?? [];
+
+            if (count($aname) > 0) {
+
+                if (isset($_POST['aname'])) {
+
+                    for ($j = 0; $j < count($aname); $j++) {
+                        $aname1 = $aname[$j];
+                        $gender1 = $genders[$j];
+                        $BDate1 = $BDate[$j];
+                        $Relation1 = $Relation[$j];
+
+                        $sqlA = "INSERT INTO Accompanies (Name, CustomerID, RoomNum, Gender, Bdate, Relationship) VALUES ('$aname1', '$id',
+                                                                             '$room_id', '$gender1', '$BDate1'
+                                                                             , '$Relation1');";
+                        $conn->query($sqlA);
+
+                    }
+                }
+            }
+
+            $sqlU = "UPDATE rooms SET Status = 'Occupied' where RoomNum = $room_id";
+            $conn->query($sqlU);
+
+            $sqlB = "INSERT INTO Book (CustomerID, RoomNum, Inv_ID, CheckInDate, CheckOutDate, BookingType, Price) VALUES 
+                              ('$id', '$room_id', '$unique_id1', '$checkin', '$checkout', '$bookType'
+                              ,'$price');";
+            $conn->query($sqlB);
+
+            $room_id = null;
+
+        } else {
+            echo "<script>alert('No available rooms of type $room found.!');</script>";
+        }
 
     } else {
-//        echo "No available rooms of type '$room' found.";
+        echo "<script>alert('Please Login or Register to Continue the Booking Process!');
+                window.location.href = 'signUp.php';</script>";
     }
-
-
 }
 ?>
 </html>
