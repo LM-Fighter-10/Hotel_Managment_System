@@ -103,9 +103,13 @@
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-7">
                         <h6 class="section-title text-start text-primary text-uppercase mb-4">Contact</h6>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>hotelier997@gmail.com</p>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt" style="margin-right: 8px !important;
+                        margin-left: 3.5px !important;"></i>
+                        <span>'. $info['StreetNum'] .' '. $info['City'] .', '. $info['Country'] .'</span></p>
+                        <p class="mb-2"><i class="fa fa-phone-alt" style="margin-right: 8px !important;"></i>
+                            <span id="BR-PhNumber"> '.$info["ContactNumber"].'</span></p>
+                        <p class="mb-2"><i class="fa fa-envelope" style="margin-right: 8px !important;"></i>
+                        <span>hotelier997@gmail.com</span></p>
                     </div>
                     <div class="col-lg-5 col-md-12">
                         <div class="row gy-5 g-4">
@@ -113,16 +117,14 @@
                                 <h6 class="section-title text-start text-primary text-uppercase mb-4">Company</h6>
                                 <a class="btn btn-link" href="about.php">About Us</a>
                                 <a class="btn btn-link" href="contact.php">Contact Us</a>
-                                <a class="btn btn-link" href="contact.php">Support</a>
                             </div>
                             <div class="col-md-6">
-                                <h6 class="section-title text-start text-primary text-uppercase mb-4">Services</h6>
-                                <a class="btn btn-link" href="service.php">Food & Restaurant</a>
-                                <a class="btn btn-link" href="service.php">Spa & Fitness</a>
-                                <a class="btn btn-link" href="service.php">Sports & Gaming</a>
-                                <a class="btn btn-link" href="service.php">Event & Party</a>
-                                <a class="btn btn-link" href="service.php">GYM & Yoga</a>
-                            </div>
+                                <h6 class="section-title text-start text-primary text-uppercase mb-4">Services</h6>';
+    $services = $conn->query($SelectingAllServices);
+    while ($service = $services->fetch_assoc()){
+        $footerBlock .= '<a class="btn btn-link" href="service.php">'.$service['Name'].'</a>';
+    }
+    $footerBlock .= '</div>
                         </div>
                     </div>
                 </div>
@@ -329,7 +331,7 @@
 
     function refreshServices() {
         global $conn, $services, $SelectingAllServices, $serviceInd;
-        $resultServices =$conn->query($SelectingAllServices);
+        $resultServices = $conn->query($SelectingAllServices);
         $services = "";
         $serviceInd = 1;
         $icons = array("fa-futbol", "fa-birthday-cake", "fa-spa", "fa-dumbbell", "fa-utensils", "fa-hotel");

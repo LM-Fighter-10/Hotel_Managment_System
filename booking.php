@@ -376,7 +376,6 @@ if (isset($_POST['submit'])) {
     }
 
     $unique_id = "CUST".$unique_id;
-    echo $unique_id;
 
     $unique_id1 = mt_rand(10000, 99999);
     $result = $conn->query("select * from invoice where Inv_ID = $unique_id1");
@@ -386,7 +385,6 @@ if (isset($_POST['submit'])) {
     }
 
     $unique_id1 = "INV".$unique_id1;
-    echo $unique_id1;
 
     // Sanitize inputs to avoid SQL injection
     $fname = $conn->real_escape_string($_POST['fname']);
@@ -419,17 +417,17 @@ if (isset($_POST['submit'])) {
     $sqlInv = "INSERT INTO Invoice (Inv_ID, Description) VALUES ('$unique_id1', '$description');";
 
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully!";
+//        echo "New record created successfully!";
 
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
     if ($conn->query($sqlInv) === TRUE) {
-        echo "New record created successfully!";
+//        echo "New record created successfully!";
 
     } else {
-        echo "Error: " . $sqlInv . "<br>" . $conn->error;
+//        echo "Error: " . $sqlInv . "<br>" . $conn->error;
     }
 
     $sqlr = "SELECT RoomNum, Price_Per_Night FROM rooms WHERE Capacity = ? AND Status = 'Available' LIMIT 1";
@@ -448,7 +446,6 @@ if (isset($_POST['submit'])) {
     }
 
     if ($room_id !== null) {
-        echo "The first available room with type '$room' has ID: $room_id";
 
         $aname = $_POST['aname'] ?? [];
         $genders = $_POST['genders'] ?? [];
@@ -485,7 +482,7 @@ if (isset($_POST['submit'])) {
         $room_id = null;
 
     } else {
-        echo "No available rooms of type '$room' found.";
+//        echo "No available rooms of type '$room' found.";
     }
 
 }
