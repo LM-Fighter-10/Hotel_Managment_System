@@ -158,7 +158,6 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
     <!-- Template Javascript -->
     <script src="js/main.js"></script>';
 
@@ -167,7 +166,7 @@
         $resultStatus =$conn->query($SelectingRoomStatus);
         $rooms = "";
         $roomInd = 1;
-        while($room =$resultStatus->fetch_assoc()){
+        while($room = $resultStatus->fetch_assoc()){
             if ($roomInd == 4){
                 $roomInd = 1;
             }
@@ -212,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="booking.php">Book Now</a>
                             </div>
                         </div>
                     </div>
@@ -294,11 +293,6 @@
             }
            
             $employees .= '
-                        <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                        </div>
                     </div>
                     <div class="text-center p-4 mt-3" id="Fullname">
                         <h5 class="fw-bold mb-0"  id="FN'.$empNo.'">' .$emp['FName'] . '</h5>
@@ -654,7 +648,6 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data.restaurantId_error);
                         if (data.workingh_error || data.FirstName_error || data.LastName_error || data.RoleName_error || data
                                 .salary_error|| data.country_error || data.email_error || data.restaurantId_error ||
                                 data.serviceId_error || data.city_error || data.state_error|| data.zipcode_error
