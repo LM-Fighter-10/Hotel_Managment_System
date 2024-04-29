@@ -234,7 +234,7 @@
                             </div>
                             <div class="d-flex justify-content-center">
     
-                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="booking.php">Book Now</a>
                             </div>
                         </div>
                     </div>
@@ -257,7 +257,7 @@
                             </div>
                             <div class="d-flex justify-content-center">
     
-                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
+                                <a class="btn btn-sm btn-dark rounded py-2 px-4" href="booking.php">Book Now</a>
                             </div>
                         </div>
                     </div>
